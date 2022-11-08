@@ -1,6 +1,6 @@
 public without sharing class CarLeasingDiscountController {
     @AuraEnabled
-    public static PricebookEntry getNewPriceForProduct(List<Product2> product2s, String pricebook2Id) {
+    public static List<PricebookEntry> getNewPriceForProduct(List<Product2> product2s, String pricebook2Id) {
         System.debug('PricebookEntry');
         System.debug(product2s);
         System.debug(pricebook2Id);
@@ -28,7 +28,7 @@ public without sharing class CarLeasingDiscountController {
                 }
             }
 
-            return pricebookEntries[0];
+            return pricebookEntries;
         } catch (Exception e) {
             System.debug(e);
             throw new AuraHandledException(e.getMessage());

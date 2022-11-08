@@ -1,4 +1,4 @@
-import {api, LightningElement, track} from 'lwc';
+import {wire, LightningElement, track} from 'lwc';
 import createDiscount from '@salesforce/apex/CarLeasingDiscountController.CreatePricebook';
 import getAllPriceBooks from '@salesforce/apex/CarLeasingDiscountController.GetAllPriceBooks';
 import getAllProducts from '@salesforce/apex/CarLeasingDiscountController.getAllProducts';
@@ -19,9 +19,16 @@ const productColumns = [
     {label: 'Model', fieldName: 'Model__c'},
 ]
 
+const newPricesColumns = [
+    {label: 'Manufacturer', fieldName: 'model'},
+    {label: 'Model', fieldName: 'manufacturer'},
+    {label: 'New Price', fieldName: 'price'},
+]
+
 export default class CarLeasingDiscountManager extends NavigationMixin(LightningElement) {
     columns = columns;
     productColumns = productColumns;
+    newPricesColumns = newPricesColumns;
 
     @track
     isNewPricebookModalOpen = false;
@@ -29,6 +36,17 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
     isLoading;
     priceBooks;
     products;
+    newPrices;
+
+    selectedDiscountId;
+    selectedProductsProxy = [];
+    selectedProducts = [];
+    isLoading;
+    discountType = '';
+    discountValue;
+    discountName = '';
+    selectedMenuItem = 'discountStage';
+    userMenuOpened = false;
 
     openPricebookModal() {
         this.isNewPricebookModalOpen = true;
@@ -44,10 +62,6 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
             {label: 'Currency', value: 'Currency'},
         ];
     }
-
-    discountType = '';
-    discountValue;
-    discountName = '';
 
     handleDiscountType(event) {
         this.discountType = event.detail.value;
@@ -71,20 +85,26 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         createDiscount({wrapper: discountWrapper})
             .then(result => {
                 this.newDiscount = result;
-                console.log(result);
             })
             .then(() => {
-                this.getUpdatedListOfPriceBooks();
-            })
-            .then(() => {
-                window.location.reload();
+                getAllPriceBooks()
+                .then((result) => {
+                    this.priceBooks = result;
+                })
             })
             .then(() => {
                 this.isNewPricebookModalOpen = false;
             })
+            .then(() => {
+                let toastMessage = {
+                    title: 'Success!',
+                    message: 'New pricebook successfully created!',
+                    variant: 'success',
+                }
+                this.showNotification(toastMessage);
+            })
             .catch(error => {
                 this.error = error;
-                console.log('Error is ' + this.error);
             });
     }
 
@@ -93,21 +113,9 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         getAllPriceBooks()
             .then((result) => {
                 this.priceBooks = result;
-                console.log(result);
             })
             .then(() => {
                 this.assignAllProducts();
-            })
-            .then(() => {
-                this.isLoading = false;
-            })
-    }
-
-    getUpdatedListOfPriceBooks() {
-        getAllPriceBooks()
-            .then((result) => {
-                this.priceBooks = result;
-                console.log(result);
             })
             .then(() => {
                 this.isLoading = false;
@@ -121,17 +129,12 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
             })
     }
 
-    selectedDiscountId;
-
     getSelectedDiscount(event) {
         const selectedRows = event.detail.selectedRows;
         for (let i = 0; i < selectedRows.length; i++) {
-            console.log(selectedRows[i].Id);
             this.selectedDiscountId = selectedRows[i].Id;
         }
     }
-
-    selectedProductsProxy = [];
 
     getSelectedName(event) {
         let currentRows = event.detail.selectedRows;
@@ -143,23 +146,37 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         this.fillselectedProducts();
     }
 
-    selectedProducts = [];
-
     fillselectedProducts() {
         this.selectedProductsProxy.forEach(product => {
             this.selectedProducts.push(product);
         })
     }
 
+
+    // @wire(getNewPriceForProduct, {product2s: '$selectedProducts', pricebook2Id: '$selectedDiscountId'})
+    // wiredNewPrices(results){
+    //     if(results){
+    //         console.log(results);
+    //         // this.newPrices = results.map((result) => ({
+    //         //     model: result.Product2.Model__c,
+    //         //     manufacturer: result.Product2.Manufacturer__c,
+    //         //     price: result.UnitPrice
+    //         // }));
+    //     }
+    // }
+
+
     showNewPrice(){
-        console.log(this.selectedProducts);
-        console.log(this.selectedDiscountId);
         getNewPriceForProduct({
             product2s: this.selectedProducts,
             pricebook2Id: this.selectedDiscountId
         })
-        .then(result => {
-            console.log(result);
+        .then(results => {
+            this.newPrices = results.map((result) => ({
+                model: result.Product2.Model__c,
+                manufacturer: result.Product2.Manufacturer__c,
+                price: result.UnitPrice
+            }));
         })
     }
 
@@ -197,7 +214,10 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
                 this.showNotification(toastMessage);
             })
             .then(() => {
-                window.location.reload();
+                getAllPriceBooks()
+                .then((result) => {
+                    this.priceBooks = result;
+                })
             })
             .catch((error) => {
                 let errorMessage = {
@@ -229,10 +249,7 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         this.dispatchEvent(evt);
     }
 
-    isLoading;
-
-    selectedMenuItem = 'discountStage';
-    userMenuOpened = false;
+    
 
     get isProductStageSelected() {
         return this.selectedMenuItem === 'productStage';

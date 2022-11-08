@@ -94,6 +94,15 @@
             <template if:true={isConfirmStageSelected}>
                 <div class="slds-col div-style-discount-manager">
                     <lightning-card>
+                        <div class="slds-m-around_medium">
+                            <template if:true={newPrices}>
+                                <lightning-datatable
+                                        data={newPrices}
+                                        columns={newPricesColumns}
+                                        key-field="Id">
+                                </lightning-datatable>
+                            </template>
+                        </div>
                         <div class="slds-p-around_medium">
                             <div class="slds-text-body_regular slds-p-bottom_medium">showNewPrice</div>
                             <lightning-button variant="brand"
@@ -146,7 +155,7 @@
                             <lightning-combobox
                                     id="select-01"
                                     name="progress"
-                                    label="Status"
+                                    label="Discount type"
                                     value={discountType}
                                     placeholder="Select Progress"
                                     options={options}
