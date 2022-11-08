@@ -1,5 +1,41 @@
 public without sharing class CarLeasingDiscountController {
     @AuraEnabled
+    public static PricebookEntry getNewPriceForProduct(List<Product2> product2s, String pricebook2Id) {
+        System.debug('PricebookEntry');
+        System.debug(product2s);
+        System.debug(pricebook2Id);
+        try {
+            List<Pricebook2> pricebook2s = [
+                SELECT Id, IsActive, IsStandard, Currency_discount__c, Percent_discount__c
+                FROM Pricebook2 
+                WHERE Id =: pricebook2Id];
+
+            Pricebook2 pricebook2 = pricebook2s[0];
+
+            List<PricebookEntry> pricebookEntries = [
+                SELECT UnitPrice, Product2.Manufacturer__c, Product2.Model__c
+                FROM PricebookEntry
+                WHERE Product2Id IN : product2s
+                AND Pricebook2.IsStandard = TRUE
+            ];
+
+            for (PricebookEntry pricebookEntry : pricebookEntries) {
+                if (pricebook2.Currency_discount__c != 0 && pricebook2.Currency_discount__c != null) {
+                    pricebookEntry.UnitPrice = pricebookEntry.UnitPrice - pricebook2.Currency_discount__c;
+                }
+                if (pricebook2.Percent_discount__c != 0 && pricebook2.Percent_discount__c != null) {
+                    pricebookEntry.UnitPrice = pricebookEntry.UnitPrice * (1 - (pricebook2.Percent_discount__c * 0.01));
+                }
+            }
+
+            return pricebookEntries[0];
+        } catch (Exception e) {
+            System.debug(e);
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
     public static Pricebook2 CreatePricebook(CarLeasingWrapper wrapper) {
         Pricebook2 pricebook2 = new Pricebook2();
         pricebook2.Name = wrapper.discountName;

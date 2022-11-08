@@ -3,6 +3,7 @@ import createDiscount from '@salesforce/apex/CarLeasingDiscountController.Create
 import getAllPriceBooks from '@salesforce/apex/CarLeasingDiscountController.GetAllPriceBooks';
 import getAllProducts from '@salesforce/apex/CarLeasingDiscountController.getAllProducts';
 import getAssignPricebookToProduct from '@salesforce/apex/CarLeasingDiscountController.AssignPricebookToProduct';
+import getNewPriceForProduct from '@salesforce/apex/CarLeasingDiscountController.getNewPriceForProduct';
 import removePricebook from '@salesforce/apex/CarLeasingDiscountController.deletePricebook';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import {NavigationMixin} from "lightning/navigation";
@@ -130,29 +131,41 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         }
     }
 
-    selectedProductIdsProxy = [];
+    selectedProductsProxy = [];
 
     getSelectedName(event) {
         let currentRows = event.detail.selectedRows;
-        if (this.selectedProductIdsProxy.length > 0) {
+        if (this.selectedProductsProxy.length > 0) {
             let selectedIds = currentRows.map(row => row);
-            let unselectedRows = this.selectedProductIdsProxy.filter(row => !selectedIds.includes(row));
+            let unselectedRows = this.selectedProductsProxy.filter(row => !selectedIds.includes(row));
         }
-        this.selectedProductIdsProxy = currentRows;
-        this.fillSelectedProductIds();
+        this.selectedProductsProxy = currentRows;
+        this.fillselectedProducts();
     }
 
-    selectedProductIds = [];
+    selectedProducts = [];
 
-    fillSelectedProductIds() {
-        this.selectedProductIdsProxy.forEach(product => {
-            this.selectedProductIds.push(product);
+    fillselectedProducts() {
+        this.selectedProductsProxy.forEach(product => {
+            this.selectedProducts.push(product);
+        })
+    }
+
+    showNewPrice(){
+        console.log(this.selectedProducts);
+        console.log(this.selectedDiscountId);
+        getNewPriceForProduct({
+            product2s: this.selectedProducts,
+            pricebook2Id: this.selectedDiscountId
+        })
+        .then(result => {
+            console.log(result);
         })
     }
 
     assignPricebookToProduct() {
         getAssignPricebookToProduct({
-            product2s: this.selectedProductIds,
+            product2s: this.selectedProducts,
             pricebook2Id: this.selectedDiscountId
         })
             .then(() => {
@@ -214,5 +227,38 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
             variant: toastMessage.variant,
         });
         this.dispatchEvent(evt);
+    }
+
+    isLoading;
+
+    selectedMenuItem = 'discountStage';
+    userMenuOpened = false;
+
+    get isProductStageSelected() {
+        return this.selectedMenuItem === 'productStage';
+    }
+
+    get isDiscountStageSelected() {
+        return this.selectedMenuItem === 'discountStage';
+    }
+
+    get isConfirmStageSelected() {
+        return this.selectedMenuItem === 'confirmStage';
+    }
+
+    handleMenuButtonClick(event) {
+        this.isLoading = true;
+        this.selectedMenuItem = event.currentTarget.dataset.id;
+        this.toggleButton();
+        this.isLoading = false;
+    }
+
+    toggleButton() {
+        const buttons = this.template.querySelectorAll('[class="menu-button menu-button-active"]');
+        const button = this.template.querySelector('[data-id="' + this.selectedMenuItem + '"]');
+        for(let i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove('menu-button-active');
+        }
+        button.classList.add("menu-button-active");
     }
 }

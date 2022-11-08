@@ -1,3 +1,76 @@
+
+.main-container {
+    width: 20%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+.logotype-container {
+    padding: 70px 0 0 40px;
+}
+.big-text-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 2px;
+}
+.big-text {
+    text-align: left;
+    font-size: 28px;
+    font-weight: bold;
+    color: #666666;
+}
+.big-text-yellow {
+    text-align: left;
+    font-size: 38px;
+    font-weight: bold;
+    color: #ffcb05;
+}
+.small-text {
+    font-size: 28px;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333333;
+}
+.x-small-text {
+    font-size: 16px;
+    color: #333333;
+    margin-bottom: 8px;
+}
+.color-brand-yellow {
+    color: #e8b800;
+}
+.xx-small-text {
+    font-size: 12px;
+    color: #666666;
+}
+.buttons-container {
+    margin-top: 16%;
+}
+.button {
+    width: 90%;
+    height: 74px;
+    padding: 20px 36px;
+    margin: 0 5%;
+    background-color: #ffe069;
+    border-radius: 16px;
+    display: flex;
+    align-items: flex-end;
+}
+.button-label {
+    margin-left: 12px;
+    color: #222222;
+    font-size: 22px;
+    font-weight: bold;
+    align-self: flex-end;
+    background-color: blue;
+}
+.content-container-grid{
+    display: grid;
+}
 .div-style-discount-manager{
     max-width: 50%;
+    justify-self: center;
 }
