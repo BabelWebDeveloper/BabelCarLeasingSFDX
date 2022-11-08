@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Get picklist values of Industry field" icon-name="standard:user">
+        <div class="slds-m-around_medium">
+            <template if:true={industryPicklist.data}>
+                <lightning-combobox name="Industry" label="Industry" value={value}
+                                    options={industryPicklist.data.values} onchange={handleChange}>
+                </lightning-combobox>
+            </template>
+            <p>Selected value is: {value}</p>
+        </div>
+    </lightning-card>
+</template>

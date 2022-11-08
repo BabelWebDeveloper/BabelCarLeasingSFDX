@@ -1,0 +1,14 @@
+<apex:component id="spinner">
+       <apex:actionStatus id="status">
+            <apex:facet name="start">
+            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                &nbsp;
+            </div>
+            <div style="position: fixed; left: 50%; top: 50%; bottom: 0; right: 0; z-index: 1001;">
+            <span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Loading_Key.gif" />
+                </span>
+            </div>
+            </apex:facet>
+        </apex:actionStatus>
+</apex:component>

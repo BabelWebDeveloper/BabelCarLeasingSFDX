@@ -1,0 +1,54 @@
+.div-class-orders {
+    margin-bottom: 20px;
+}
+
+.slds-truncate {
+    color: rgb(0, 0, 0);
+}
+
+h1 {
+    font-weight: 700;
+    text-align: center;
+    padding: 30px 0;
+}
+
+h2 {
+    font-weight: 700;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+.style-img-orders {
+    width: 500px;
+}
+
+.style-orders {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.div-class-order-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.div-class-order-details > * {
+    padding: 10px 0;
+}
+
+.div-button-report-case {
+    width: 150px;
+    position: relative;
+    border: 2px solid #FD6B02;
+    border-radius: 20px;
+    text-align: center;
+    color: black;
+    cursor: pointer;
+}
+.div-button-report-case:hover {
+    background-color: #FD6B02;
+}
