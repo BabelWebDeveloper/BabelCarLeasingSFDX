@@ -1,0 +1,12 @@
+<template>
+    <template if:true={isVariantTransparent}>
+        <div class="spinner-container">
+            <img src={spinnerUri} width="48"/>
+        </div>
+    </template>
+    <template if:true={isVariantFullWhite}>
+        <div class="spinner-container full-white-background">
+            <img src={spinnerUri} width="48"/>
+        </div>
+    </template>
+</template>

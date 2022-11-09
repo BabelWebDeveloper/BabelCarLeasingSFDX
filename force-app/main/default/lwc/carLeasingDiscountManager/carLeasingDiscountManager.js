@@ -1,4 +1,4 @@
-import {wire, LightningElement, track} from 'lwc';
+import {wire, LightningElement, track, api} from 'lwc';
 import createDiscount from '@salesforce/apex/CarLeasingDiscountController.CreatePricebook';
 import getAllPriceBooks from '@salesforce/apex/CarLeasingDiscountController.GetAllPriceBooks';
 import getAllProducts from '@salesforce/apex/CarLeasingDiscountController.getAllProducts';
@@ -37,6 +37,8 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
     priceBooks;
     products;
     newPrices;
+    disableProductStageButton = true;
+    disableConfirmStageButton = true;
 
     selectedDiscountId;
     selectedProductsProxy = [];
@@ -134,6 +136,7 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         for (let i = 0; i < selectedRows.length; i++) {
             this.selectedDiscountId = selectedRows[i].Id;
         }
+        this.disableProductStageButton = false;
     }
 
     getSelectedName(event) {
@@ -150,21 +153,12 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         this.selectedProductsProxy.forEach(product => {
             this.selectedProducts.push(product);
         })
+        if (this.selectedProductsProxy.length > 0) {
+            this.disableConfirmStageButton = false;
+        } else {
+            this.disableConfirmStageButton = true;
+        }
     }
-
-
-    // @wire(getNewPriceForProduct, {product2s: '$selectedProducts', pricebook2Id: '$selectedDiscountId'})
-    // wiredNewPrices(results){
-    //     if(results){
-    //         console.log(results);
-    //         // this.newPrices = results.map((result) => ({
-    //         //     model: result.Product2.Model__c,
-    //         //     manufacturer: result.Product2.Manufacturer__c,
-    //         //     price: result.UnitPrice
-    //         // }));
-    //     }
-    // }
-
 
     showNewPrice(){
         getNewPriceForProduct({
@@ -249,8 +243,6 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
         this.dispatchEvent(evt);
     }
 
-    
-
     get isProductStageSelected() {
         return this.selectedMenuItem === 'productStage';
     }
@@ -266,8 +258,10 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
     handleMenuButtonClick(event) {
         this.isLoading = true;
         this.selectedMenuItem = event.currentTarget.dataset.id;
+        if(this.selectedMenuItem === 'confirmStage') {
+            this.showNewPrice();
+        }
         this.toggleButton();
-        this.isLoading = false;
     }
 
     toggleButton() {
@@ -277,5 +271,6 @@ export default class CarLeasingDiscountManager extends NavigationMixin(Lightning
             buttons[i].classList.remove('menu-button-active');
         }
         button.classList.add("menu-button-active");
+        this.isLoading = false;
     }
 }

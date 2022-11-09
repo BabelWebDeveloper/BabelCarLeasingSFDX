@@ -1,4 +1,7 @@
 <template>
+    <template if:true={isLoading}>
+        <c-spinner></c-spinner>
+    </template>
     <div class="slds-path">
 		<div class="slds-grid slds-path__track">
 			<div class="slds-grid slds-path__scroller-container">
@@ -50,7 +53,7 @@
                         </div>
                         <div class="panel panel-default slds-p-around_small">
                             <div class="panel-body row">
-                                <div class="col-sm-6 col-xs-12 slds-box slds-theme_shade">
+                                <div class="col-sm-6 col-xs-12">
                                     <lightning-button variant="brand"
                                                       label="New Discount"
                                                       title="New Discount"
@@ -69,6 +72,15 @@
                                                       onclick={editDiscount}
                                                       class="slds-m-left_x-small">
                                     </lightning-button>
+                                    <lightning-button variant="brand"
+                                                      label="Next"
+                                                      title="Next"
+                                                      data-id="productStage" 
+                                                      onclick={handleMenuButtonClick}
+                                                      class="slds-m-left_x-small"
+                                                      disabled={disableProductStageButton}>
+                                    </lightning-button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -88,6 +100,27 @@
                                 </lightning-datatable>
                             </template>
                         </div>
+                        <div class="panel panel-default slds-p-around_small">
+                            <div class="panel-body row">
+                                <div class="col-sm-6 col-xs-12">
+                                    <lightning-button variant="brand"
+                                                      label="Previous"
+                                                      title="Previous"
+                                                      data-id="discountStage" 
+                                                      onclick={handleMenuButtonClick}
+                                                      class="slds-m-left_x-small">
+                                    </lightning-button>
+                                    <lightning-button variant="brand"
+                                                      label="Next"
+                                                      title="Next"
+                                                      data-id="confirmStage" 
+                                                      onclick={handleMenuButtonClick}
+                                                      class="slds-m-left_x-small" 
+                                                      disabled={disableConfirmStageButton}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+                        </div>
                     </lightning-card>
                 </div>
             </template>
@@ -96,28 +129,59 @@
                     <lightning-card>
                         <div class="slds-m-around_medium">
                             <template if:true={newPrices}>
-                                <lightning-datatable
-                                        data={newPrices}
-                                        columns={newPricesColumns}
-                                        key-field="Id">
-                                </lightning-datatable>
+
+
+
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                                    <thead>
+                                      <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                          <div class="slds-truncate" title="Model">Model</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                          <div class="slds-truncate" title="Manufacturer">Manufacturer</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                          <div class="slds-truncate" title="New Price">New Price</div>
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={newPrices} for:item="newPrice">
+                                            <tr class="slds-hint-parent" key={newPrice.Id}>
+                                                <th data-label="Opportunity Name" scope="row">
+                                                  <div class="slds-truncate" title="Cloudhub">{newPrice.model}</div>
+                                                </th>
+                                                <td data-label="Account Name">
+                                                  <div class="slds-truncate" title="Cloudhub">{newPrice.manufacturer}</div>
+                                                </td>
+                                                <td data-label="Close Date">
+                                                  <div class="slds-truncate" title="4/14/2015">{newPrice.price}</div>
+                                                </td>
+                                              </tr>
+                                        </template>
+                                    </tbody>
+                                  </table>
                             </template>
                         </div>
-                        <div class="slds-p-around_medium">
-                            <div class="slds-text-body_regular slds-p-bottom_medium">showNewPrice</div>
-                            <lightning-button variant="brand"
-                                              label="showNewPrice"
-                                              title="showNewPrice"
-                                              onclick={showNewPrice}>
-                            </lightning-button>
-                        </div>
-                        <div class="slds-p-around_medium">
-                            <div class="slds-text-body_regular slds-p-bottom_medium">Select existing pricebook and products to assign.</div>
-                            <lightning-button variant="brand"
-                                              label="Set New Pricebook"
-                                              title="Set New Pricebook"
-                                              onclick={assignPricebookToProduct}>
-                            </lightning-button>
+                        <div class="panel panel-default slds-p-around_small">
+                            <div class="panel-body row">
+                                <div class="col-sm-6 col-xs-12">
+                                    <lightning-button variant="brand"
+                                                label="Previous"
+                                                title="Previous"
+                                                data-id="productStage" 
+                                                onclick={handleMenuButtonClick}
+                                                class="slds-m-left_x-small">
+                                    </lightning-button>
+                                    <lightning-button variant="brand"
+                                                label="Set New Price"
+                                                title="Set New Price"
+                                                onclick={assignPricebookToProduct}
+                                                class="slds-m-left_x-small">
+                                    </lightning-button>
+                                </div>
+                            </div>
                         </div>
                     </lightning-card>
                 </div>
