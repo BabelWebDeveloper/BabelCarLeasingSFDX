@@ -75,4 +75,14 @@ public without sharing class CarLeasingAdminController {
         update contentVersions;
         return contentVersions;
     }
+
+    @AuraEnabled
+    public static String login(CarLeasingWrapper loginWrapper) {
+        try {
+            ApexPages.PageReference lgn = Site.login(loginWrapper.email, loginWrapper.password, loginWrapper.startUrl);
+            return lgn.getUrl();
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+    }
 }

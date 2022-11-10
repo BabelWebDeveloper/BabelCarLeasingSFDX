@@ -41,4 +41,22 @@ public class CarLeasingWrapper {
     public Integer carLength{get;set;}
     @AuraEnabled
     public Integer theSizeOfTheWheels{get;set;}
+
+    @AuraEnabled
+    public String orderItemId{get;set;}
+    @AuraEnabled
+    public String caseType{get;set;}
+    @AuraEnabled
+    public String caseReason{get;set;}
+    @AuraEnabled
+    public String subject{get;set;}
+    @AuraEnabled
+    public String description{get;set;}
+
+    @AuraEnabled
+    public String email{get;set;}
+    @AuraEnabled
+    public String password{get;set;}
+    @AuraEnabled
+    public String startUrl{get;set;}
 }

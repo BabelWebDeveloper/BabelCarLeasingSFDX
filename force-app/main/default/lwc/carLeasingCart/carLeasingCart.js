@@ -69,6 +69,8 @@ export default class CarLeasingCart extends LightningElement {
         this.startFee = message.startFee;
         this.unitPrice = message.unitPrice;
         this.cartItemsNumber = message.cartItemsNumber;
+        console.log(this.cartItemsNumber);
+        console.log(this.orderItemsNumber);
         this.createOrderItem();
     }
 

@@ -1,9 +1,7 @@
 public without sharing class CarLeasingDiscountController {
     @AuraEnabled
     public static List<PricebookEntry> getNewPriceForProduct(List<Product2> product2s, String pricebook2Id) {
-        System.debug('PricebookEntry');
-        System.debug(product2s);
-        System.debug(pricebook2Id);
+
         try {
             List<Pricebook2> pricebook2s = [
                 SELECT Id, IsActive, IsStandard, Currency_discount__c, Percent_discount__c

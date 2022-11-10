@@ -1,0 +1,38 @@
+<template>
+    <h2 class="slds-text-heading_medium slds-m-vertical_medium">Reclamations</h2>
+        <div class="slds-m-around_medium div-table-style">
+            <template if:true={cases}>
+                <table class="">
+                    <thead>
+                        <tr class="">
+                            <th class="" scope="col">
+                                <div class="" title="Model">Car</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="" title="Reason">Problem Type</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="" title="Date">Date</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={cases} for:item="record">
+                            <tr class="row-style" key={record.Id}>
+                                <td data-label="Opportunity Name" scope="row">
+                                    <div class="">{record.Product.Manufacturer__c} {record.Product.Model__c}</div>
+                                </td>
+                                <td data-label="Opportunity Name" scope="row">
+                                    <div class="">{record.Type}</div>
+                                </td>
+                                <td data-label="Opportunity Name" scope="row">
+                                    <div class="">{record.CreatedDate}</div>
+                                </td>
+                            </tr>
+                            <br key={record.Id}>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+</template>

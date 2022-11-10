@@ -74,3 +74,10 @@
     max-width: 50%;
     justify-self: center;
 }
+.sldsStyle{
+    cursor: default!important;
+    pointer-events: none!important;
+}
+.slds-path__item{
+    pointer-events: none!important;
+}

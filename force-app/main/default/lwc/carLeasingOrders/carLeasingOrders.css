@@ -52,3 +52,9 @@ p {
 .div-button-report-case:hover {
     background-color: #FD6B02;
 }
+.problem-button{
+    color: #000000;
+}
+.report-problem-button{
+    background-color: #FD6B02;
+}

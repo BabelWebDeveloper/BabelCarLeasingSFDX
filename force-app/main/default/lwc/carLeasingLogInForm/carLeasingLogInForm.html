@@ -1,0 +1,23 @@
+<template>
+	<h2 class="slds-text-heading_medium slds-m-vertical_medium">Login</h2>
+	<form>
+		<input id="email-input" type="email" placeholder="E-mail" variant="label-hidden" value={email} onkeyup={onEmailChange} onload={onEmailChange}
+			maxlength="127" required />
+		<div class="password-input">
+			<input id="myInput" type={inputType} placeholder="Password" variant="label-hidden" value={password}
+				onkeyup={onPasswordChange} onload={onPasswordChange} maxlength="127" required />
+			<template if:false={isPasswordVisible}>
+				<lightning-icon class="password-option-icon" icon-name="utility:hide" alternative-text="Show password"
+					size="small" onclick={showPassword}></lightning-icon>
+			</template>
+			<template if:true={isPasswordVisible}>
+				<lightning-icon class="password-option-icon" icon-name="utility:preview" alternative-text="Ukryj"
+					size="small" onclick={showPassword}></lightning-icon>
+			</template>
+		</div>
+		<div class="x-small-text">Forgot password?</div>
+		<div class="login-button-container">
+			<button type="submit" class="login-button" onclick={handleLoginButtonClick}>Log in</button>
+		</div>
+	</form>
+</template>

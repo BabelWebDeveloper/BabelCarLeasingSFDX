@@ -1,0 +1,28 @@
+h2 {
+    font-weight: 700;
+    text-align: center;
+}
+.login-button-container {
+    padding-top: 22px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.login-button {
+    width: fit-content;
+    height: 42px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 14px;
+    border: none !important;
+    outline: none !important;
+    justify-content: center;
+    font-weight: 700;
+    align-items: center;
+    background-color: #fd6b02;
+    color: #ffffff;
+    cursor: pointer;
+}
+.login-button:hover {
+    background-color: rgb(80, 33, 0);
+}

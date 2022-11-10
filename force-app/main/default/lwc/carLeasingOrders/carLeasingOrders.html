@@ -1,32 +1,108 @@
 <template>
-    <template if:true={activeOrders.data}>
-        <div class="slds-scrollable_y ">
-            <lightning-layout horizontal-align="center" multiple-rows>
-                <template for:each={activeOrders.data} for:item="order">
-                    <lightning-layout-item key={order.Id} padding="around-small" size="12" small-device-size="12"
-                                           medium-device-size="12" large-device-size="8">
-                        <h1>Order date: {order.CreatedDate}</h1>
-                        <template for:each={order.OrderItems} for:item="item">
-                            <div key={item.Id} class="style-orders">
-                                <div class="div-class-orders">
-                                    <img class="style-img-orders" src={item.Product2.Picture__c}/>
-                                </div>
-                                <div class="div-class-order-details">
-                                    <h2>{item.Product2.Manufacturer__c} {item.Product2.Model__c}</h2>
-                                    <p>{label.Quantity} {item.Quantity}</p>
-                                    <p>{label.Totalcost} {item.TotalPrice} {label.EUR}</p>
-                                    <div data-target-id={item.Id} class="div-button-report-case"
-                                         onclick={reportProblem}>Report a problem</div>
-                                </div>
-                            </div>
-                        </template>
-                        <hr>
-                    </lightning-layout-item>
-                </template>
-            </lightning-layout>
+  <template if:true={activeOrders.data}>
+    <h2 class="slds-text-heading_medium slds-m-vertical_medium">Orders</h2>
+    <div class="slds-scrollable_y">
+      <lightning-layout horizontal-align="center" multiple-rows>
+        <template for:each={activeOrders.data} for:item="order">
+          <lightning-layout-item key={order.Id} padding="around-small" size="12" small-device-size="12"
+            medium-device-size="12" large-device-size="8">
+            <h1>Order date: {order.CreatedDate}</h1>
+            <template for:each={order.OrderItems} for:item="item">
+              <div key={item.Id} class="style-orders">
+                <div class="div-class-orders">
+                  <img class="style-img-orders" src={item.Product2.Picture__c} />
+                </div>
+                <div class="div-class-order-details">
+                  <h2>{item.Product2.Manufacturer__c} {item.Product2.Model__c}</h2>
+                  <p>{label.Quantity} {item.Quantity}</p>
+                  <p>{label.Totalcost} {item.TotalPrice} {label.EUR}</p>
+                  <div data-target-id={item.Id} class="div-button-report-case" onclick={openCaseModal}>Report a problem
+                  </div>
+                </div>
+              </div>
+            </template>
+            <hr>
+          </lightning-layout-item>
+        </template>
+      </lightning-layout>
+    </div>
+  </template>
+  <template if:true={showConnectedMessage}>
+    <h2 class="slds-text-heading_medium slds-m-vertical_medium">{label.You_haven_t_had_any_orders_yet}</h2>
+  </template>
+  <template if:true={isNewCaseModalOpen}>
+    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+      class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+          <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+          </svg>
+          <span class="slds-assistive-text">Cancel and close</span>
+        </button>
+        <div class="slds-modal__header">
+          <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Report a problem</h1>
         </div>
-    </template>
-    <template if:true={showConnectedMessage}>
-        <h2>{label.You_haven_t_had_any_orders_yet}</h2>
-    </template>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+          <template if:true={caseTypeOptions}>
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="select-01">
+                <abbr class="slds-required" title="required">* </abbr>Select Problem Type
+              </label>
+              <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                  <select class="slds-select" id="select-01" onchange={onServiceCaseTypeChange} required>
+                    <template for:each={caseTypeOptions} for:item="caseTypeOption">
+                      <option value={caseTypeOption} key={caseTypeOption}>{caseTypeOption}</option>
+                    </template>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </template>
+          <div class="slds-m-vertical_medium lgc-bg">
+            <lightning-input type="text" label="Describe a problem" onchange={handleInputChange}></lightning-input>
+          </div>
+        </div>
+        <div class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral problem-button" aria-label="Cancel and close"
+            onclick={closeModal}>Cancel</button>
+          <button class="slds-button slds-button_neutral report-problem-button problem-button" onclick={reportProblem}>Save</button>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+  </template>
+  <template if:true={showToastBar}>
+    <div class="slds-m-top_large">
+        <div class="slds-notify_container">
+            <div class="" role="status">
+                <div class="slds-notify_container slds-is-relative">
+                    <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                        <span class="slds-assistive-text">{type}</span>
+                        <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top"
+                              title="Description of icon when needed">
+                          <div class="slds-icon slds-icon_small" aria-hidden="true">
+                            <lightning-icon icon-name="utility:success" alternative-text="Success" title="Success"></lightning-icon>
+                          </div>
+                        </span>
+                        <div class="slds-notify__content">
+                            <h2 class="slds-p-vertical_none slds-text-heading_small">{message}</h2>
+                        </div>
+                        <div class="slds-notify__close">
+                            <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close">
+                                <div class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                    <lightning-button-icon icon-name="utility:close" size="small" variant="border-filled"
+                                                           class="slds-button slds-button_icon slds-button_icon-inverse"
+                                                           alternative-text="next" onclick={closeModel} ></lightning-button-icon>
+                                </div>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 </template>

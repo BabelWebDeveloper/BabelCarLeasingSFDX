@@ -134,18 +134,9 @@ export default class CarLeasingCartItems extends LightningElement {
                 this.error = error;
             });
     }
+    
     showDeleteMessage() {
         this.showToast('success','Item deleted from cart','utility:success',3000);
-    }
-
-    async showCheckoutMessage() {
-        await LightningAlert.open({
-            message: 'Thank you. Your order is being prepared.',
-            theme: 'default'
-        })
-            .then(() => {
-                window.location.reload();
-            })
     }
 
     @track type='';

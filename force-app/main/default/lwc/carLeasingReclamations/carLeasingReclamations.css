@@ -1,0 +1,27 @@
+h2 {
+    font-weight: 700;
+    text-align: center;
+}
+.div-table-style{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+table{
+    width: 50%;
+    margin-top: 100px;
+}
+th, td {
+    width: 33%;
+    text-align: center;
+}
+td{
+    padding: 20px 0;
+}
+.row-style{
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+.row-style:hover{
+    border-bottom: 2px solid #fd6b0249;
+}

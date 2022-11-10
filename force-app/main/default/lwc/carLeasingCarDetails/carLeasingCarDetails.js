@@ -1,6 +1,8 @@
 import {LightningElement, wire, track, api} from 'lwc';
 import findCarById from '@salesforce/apex/CarLeasingCarDetailsController.searchCarsById';
 import listOfGalleryUrl from '@salesforce/apex/CarLeasingCarDetailsController.getUrlsFromContentDistribution';
+import getAllComments from '@salesforce/apex/CarLeasingCarDetailsController.getAllComments';
+import saveNewComment from '@salesforce/apex/CarLeasingCarDetailsController.createComment';
 import {publish, MessageContext} from 'lightning/messageService';
 import sendProductChannel from '@salesforce/messageChannel/carLeasingSendProductChannel__c';
 import Total_cost_of_car from '@salesforce/label/c.Total_cost_of_car';
@@ -10,7 +12,6 @@ import Horsepower from '@salesforce/label/c.Horsepower';
 import Gearbox from '@salesforce/label/c.Gearbox';
 import Engine from '@salesforce/label/c.Engine';
 import Body from '@salesforce/label/c.Body';
-import LightningAlert from "lightning/alert";
 
 export default class CarLeasingCarDetails extends LightningElement {
     carId;
@@ -42,6 +43,9 @@ export default class CarLeasingCarDetails extends LightningElement {
     cartItemsNumber = 0;
     changePriceCss;
     comments;
+    pictureComment;
+    showComments;
+    showCommentApprove = false;
 
     maxStartFee;
     stepOfFee;
@@ -50,6 +54,23 @@ export default class CarLeasingCarDetails extends LightningElement {
     startFee = 0;
     monInt = this.intRate / 1200;
     carsQuantity = 1;
+    newCommentText;
+
+    handleNewComment(event) {
+        this.newCommentText = event.target.value;
+        console.log(this.newCommentText);
+    }
+
+    saveComment(){
+        this.showCommentApprove = true;
+        // saveNewComment({
+        //     product2Id: this.carId,
+        //     commentText: this.newCommentText
+        // })
+        // .then(() => {
+        //     this.retrieveAllComments();
+        // })
+    }
 
     connectedCallback() {
         let record = this.getQueryCarId();
@@ -57,9 +78,32 @@ export default class CarLeasingCarDetails extends LightningElement {
         listOfGalleryUrl({
             productId: this.carId
         })
-            .then((result) => {
-                this.listOfGalleryPictures = result;
-            })
+        .then((result) => {
+            this.listOfGalleryPictures = result;
+        })
+        .then(() => {
+            this.retrieveAllComments();
+        })
+        
+    }
+
+    retrieveAllComments(){
+        getAllComments({
+            product2Id: this.carId
+        })
+        .then(results => {
+            if (results.length > 0) {
+                this.showComments = true;
+                this.comments = results.map((result) => ({
+                    text: result.CommentText__c,
+                    createdByPicture: 'https://bwd2-dev-ed.file.force.com/' + result.CreatedBy.SmallPhotoUrl,
+                    createdByName: result.CreatedBy.Name,
+                    rating: result.Rating__c
+                }));
+            } else{
+                this.showComments = false;
+            }
+        })
     }
 
     @wire(MessageContext)
@@ -149,14 +193,6 @@ export default class CarLeasingCarDetails extends LightningElement {
         this.isLoading = false;
     }
 
-    async showAddToCartConfirmMessage() {
-        await LightningAlert.open({
-            message: 'Thank you. Product was added to cart.',
-            theme: 'default'
-        })
-            .then(() => {})
-    }
-
     getQueryCarId() {
         let params = {};
         let search = location.search.substring(1);
@@ -218,7 +254,7 @@ export default class CarLeasingCarDetails extends LightningElement {
 
     @track type='';
     @track message = '';
-    @track messageIsHtml=false;
+    @track messageIsHtml = false;
     @track showToastBar = false;
     @api autoCloseTime = 3000;
     @track icon='utility:success';
@@ -227,8 +263,8 @@ export default class CarLeasingCarDetails extends LightningElement {
     showToast(type, message,icon,time) {
         this.type = type;
         this.message = message;
-        this.icon=icon;
-        this.autoCloseTime=time;
+        this.icon = icon;
+        this.autoCloseTime = time;
         this.showToastBar = true;
         setTimeout(() => {
             this.closeModel();
@@ -239,7 +275,6 @@ export default class CarLeasingCarDetails extends LightningElement {
         this.showToastBar = false;
         this.type = '';
         this.message = '';
-        window.location.reload();
     }
 
     @track
@@ -253,8 +288,6 @@ export default class CarLeasingCarDetails extends LightningElement {
         } else {
         this.style = this.carouselSize;
         }
-        console.log(this.style);
-        console.log('size: '+this.carouselSize);
     }
 
     previous(){

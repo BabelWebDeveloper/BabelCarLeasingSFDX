@@ -42,6 +42,13 @@ section {
 .template-img-style{
     display: flex;
     flex-direction: column;
+    padding-top: 100px;
+}
+.textarea-style{
+    min-height: 100px;
+    max-height: 150px;
+    width: 1025px;
+    resize: vertical;
 }
 
 .div-carousel-style{
@@ -50,7 +57,7 @@ section {
 
 .div-offer-style {
     background-color: #FFFFFF;
-    width: 50%;
+    width: 40%;
     height: 50vh;
     display: flex;
     flex-direction: column;
@@ -86,7 +93,7 @@ section {
 
 .div-details-style {
     background-color: #FFFFFF;
-    width: 100%;
+    width: 1020px;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -96,19 +103,21 @@ section {
 
 .div-review-style {
     background-color: #FFFFFF;
-    width: 100%;
-    height: 100vh;
+    width: 800px;
+    height: 600px;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 100px;
 }
 
 .div-comment-style {
     background-color: #FFFFFF;
     width: 100%;
-    height: 50vh;
+    height: fit-content;
+    margin-bottom: 100px;
 }
 
 :host {
@@ -121,8 +130,8 @@ section {
     background: #FD6B02;
     border-radius: 20px;
     text-align: center;
-    padding: 0.2em;
-    width: 70%;
+    padding: 0.2em 1em;
+    width: fit-content;
     margin: 1em auto;
     color: white;
     cursor: pointer;
@@ -134,7 +143,6 @@ section {
 
 .div-wrap {
     border: 2px solid #FD6B02;
-    margin: 0 20px 20px 0;
     width: 100%;
 }
 
@@ -240,7 +248,7 @@ body {
 
 .comments-container {
     margin: 60px auto 15px;
-    width: 768px;
+    width: 1025px;
 }
 
 .comments-container h1 {
@@ -255,8 +263,15 @@ body {
 }
 
 .comments-list {
-    margin-top: 30px;
+    width: 100%;
+    height: 200px;
+    float: right;
     position: relative;
+    overflow: auto;
+}
+
+.comment-main-level{
+    height: fit-content;
 }
 
 .comments-list li {
@@ -298,7 +313,7 @@ body {
 }
 
 .comments-list .comment-box {
-    width: 680px;
+    width: 90%;
     float: right;
     position: relative;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -395,8 +410,18 @@ body {
     }
 }
 
-form {
-
+.myDIV {
+    height: 250px;
+    width: 250px;
+    overflow: auto;
+    background: coral;
+}
+  
+.content {
+    margin:500px;
+    height: 800px;
+    width: 2000px;
+    background-color: coral;
 }
 
 .value-button {
@@ -493,4 +518,7 @@ img{
 .slds-carousel__panel-action{
     border: 1px solid transparent;
     /* overflow: hidden; */
+}
+.comment-section{
+    padding-top: 30px;
 }

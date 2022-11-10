@@ -29,19 +29,19 @@ public without sharing class CarLeasingCarDetailsController {
 
     @AuraEnabled(cacheable=true)
     public static List<Comment__c> getAllComments(String product2Id) {
-        return [
+        List<Comment__c> comments = [
                 SELECT
-                        Id, CommentText__c, Rating__c, Product__c, CreatedBy.Name, CreatedBy.SmallPhotoUrl
-                FROM Comment__c
-                WHERE Product__c = :product2Id
+                        Id, CommentText__c, Rating__c, Product__c, CreatedBy.Name, CreatedBy.SmallPhotoUrl, CreatedById
+                FROM Comment__c WHERE Product__c =: product2Id
         ];
+        return comments;
     }
 
     @AuraEnabled
-    public static Comment__c createComment(String product2Id, Integer rate, String commentText) {
+    public static Comment__c createComment(String product2Id, String commentText) {
         Comment__c comment = new Comment__c();
         comment.Product__c = product2Id;
-        comment.Rating__c = rate;
+        comment.Rating__c = 5;
         comment.CommentText__c = commentText;
 
         try {

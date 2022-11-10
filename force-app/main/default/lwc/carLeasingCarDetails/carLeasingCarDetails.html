@@ -3,7 +3,7 @@
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </template>
     <p class="slds-hidden">{cartItemsNumber}</p>
-    <h1>{manufacturer} {model}</h1>
+    <h2 class="slds-text-heading_medium slds-m-vertical_medium">{manufacturer} {model}</h2>
     <section style="margin-bottom: 100px">
         <div class="div-img-style">
             <template if:true={listOfGalleryPictures}>
@@ -17,72 +17,38 @@
                             <div class="slds-carousel__panels" style={myStyle}>
                                 <template for:each={listOfGalleryPictures} for:item="picture">
                                     <div class="slds-carousel__panel" role="tabpanel" key={listOfGalleryPictures.Id}>
-                                        <a href="#" class="slds-carousel__panel-action slds-text-link_reset">
+                                        <div class="slds-carousel__panel-action slds-text-link_reset">
                                             <div class="no-borders">
                                                 <div class="container">
-                                                    <img src={picture.ContentDownloadUrl} alt="your_keyword"/>
+                                                    <img src={picture.ContentDownloadUrl} alt="your_keyword" />
                                                 </div>
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
                                 </template>
                             </div>
                         </div>
                     </div>
-                    <lightning-icon onclick={next} class="slds-text-link_reset" icon-name="utility:chevronright" alternative-text="next"
-                        title="next">
+                    <lightning-icon onclick={next} class="slds-text-link_reset" icon-name="utility:chevronright"
+                        alternative-text="next" title="next">
                     </lightning-icon>
                 </div>
-
-
-                <!-- <div class="slds-size_3-of-4">
-                    <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
-                        <lightning-carousel disable-auto-scroll>
-                            <template for:each={listOfGalleryPictures} for:item="picture">
-                                <lightning-carousel-image
-                                        class="carousel-style"
-                                        key = {listOfGalleryPictures.Id}
-                                        src = {picture.ContentDownloadUrl}
-                                        alternative-text = "Babel Car Leasing"
-                                        href = "javascript:void(0);">
-                                </lightning-carousel-image>
-                            </template>
-                        </lightning-carousel>
-                    </div>
-                </div> -->
             </template>
         </div>
         <div class="div-offer-style">
-                <h2 style={priceClass}>{unitPrice} EUR</h2>
-                <h2 style={discountPriceClass}>{discountPrice} EUR</h2>
-                <h3 class="slds-m-vertical_medium">{label.Monthly_payment} {totalMonthlyPayment}</h3>
-                <form class="slds-m-vertical_medium">
-                    <div class="value-button decrease" onclick={decreaseQuantity}>-</div>
-                    <input class="input-style" min="1" type="number" id="number" value={carsQuantity}/>
-                    <div class="value-button increase" onclick={increaseQuantity}>+</div>
-                </form>
-                <lightning-slider
-                        label="Contract period"
-                        size="x-small"
-                        value={contractPeriod}
-                        min="24"
-                        step="12"
-                        max="48"
-                        onchange={setContractPeriod}
-                        class="slider-style">
-                </lightning-slider>
-                <lightning-slider
-                        label="Start fee"
-                        size="x-small"
-                        value={startFee}
-                        min="0"
-                        step={stepOfFee}
-                        max={maxStartFee}
-                        onchange={setStartFee}
-                        class="slider-style">
-                </lightning-slider>
-                <div class="slds-m-vertical_medium div-button-find-car" onclick={addProductToCart}>{label.Add_to_card}
-                </div>
+            <h2 style={priceClass}>{unitPrice} EUR</h2>
+            <h2 style={discountPriceClass}>{discountPrice} EUR</h2>
+            <h3 class="slds-m-vertical_medium">{label.Monthly_payment} {totalMonthlyPayment} EUR</h3>
+            <form class="slds-m-vertical_medium">
+                <div class="value-button decrease" onclick={decreaseQuantity}>-</div>
+                <input class="input-style" min="1" type="number" id="number" value={carsQuantity} />
+                <div class="value-button increase" onclick={increaseQuantity}>+</div>
+            </form>
+            <lightning-slider label="Contract period" size="x-small" value={contractPeriod} min="24" step="12" max="48"
+                onchange={setContractPeriod} class="slider-style">
+            </lightning-slider>
+            <div class="slds-m-vertical_medium div-button-find-car" onclick={addProductToCart}>{label.Add_to_card}
+            </div>
         </div>
     </section>
     <section>
@@ -90,52 +56,52 @@
             <div class="div-wrap">
                 <table>
                     <thead>
-                    <tr>
-                        <th scope="col">{label.Horsepower}</th>
-                        <th scope="col">{label.Gearbox}</th>
-                        <th scope="col">{label.Engine}</th>
-                        <th scope="col">Acceleration</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">{label.Horsepower}</th>
+                            <th scope="col">{label.Gearbox}</th>
+                            <th scope="col">{label.Engine}</th>
+                            <th scope="col">Acceleration</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td data-label="Horsepower">{horsepower}</td>
-                        <td data-label="Gearbox">{gearbox}</td>
-                        <td data-label="Engine">{engine}</td>
-                        <td data-label="Acceleration">{acceleration}</td>
-                    </tr>
+                        <tr>
+                            <td data-label="Horsepower">{horsepower}</td>
+                            <td data-label="Gearbox">{gearbox}</td>
+                            <td data-label="Engine">{engine}</td>
+                            <td data-label="Acceleration">{acceleration}</td>
+                        </tr>
                     </tbody>
                     <thead>
-                    <tr>
-                        <th scope="col">Length</th>
-                        <th scope="col">Height</th>
-                        <th scope="col">Width</th>
-                        <th scope="col">{label.Body}</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Length</th>
+                            <th scope="col">Height</th>
+                            <th scope="col">Width</th>
+                            <th scope="col">{label.Body}</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td data-label="Length">{length}</td>
-                        <td data-label="Height">{height}</td>
-                        <td data-label="Width">{width}</td>
-                        <td data-label="Body">{body}</td>
-                    </tr>
+                        <tr>
+                            <td data-label="Length">{length}</td>
+                            <td data-label="Height">{height}</td>
+                            <td data-label="Width">{width}</td>
+                            <td data-label="Body">{body}</td>
+                        </tr>
                     </tbody>
                     <thead>
-                    <tr>
-                        <th scope="col">Fuel consumption</th>
-                        <th scope="col">Number of seats</th>
-                        <th scope="col">Production year</th>
-                        <th scope="col">Size of wheels</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Fuel consumption</th>
+                            <th scope="col">Number of seats</th>
+                            <th scope="col">Production year</th>
+                            <th scope="col">Size of wheels</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td data-label="Fuel consumption">{fuelConsumption}</td>
-                        <td data-label="Number of seats">{numberOfSeats}</td>
-                        <td data-label="Production year">{yearOfProduction}</td>
-                        <td data-label="Body">{theSizeOfTheWheels}</td>
-                    </tr>
+                        <tr>
+                            <td data-label="Fuel consumption">{fuelConsumption}</td>
+                            <td data-label="Number of seats">{numberOfSeats}</td>
+                            <td data-label="Production year">{yearOfProduction}</td>
+                            <td data-label="Body">{theSizeOfTheWheels}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -144,41 +110,60 @@
     <section>
         <div class="div-review-style">
             <h2>Car review</h2>
-            <iframe
-                    src={review}
-                    frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
+            <iframe src={review} frameborder="0" width="800" height="400"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
             </iframe>
         </div>
     </section>
     <section>
-        <template if:true={comments}>
+        <template if:false={showCommentApprove}>
+            <div class="template-img-style">
+                <div class="slds-p-around_medium lgc-bg div-textarea-style">
+                    <p>Enter your comment here:</p>
+                    <textarea class="textarea-style" label="Enter your comment here with a maximum length of 140 characters"
+                         maxlength="140" message-when-too-long="A maximum of 140 characters are allowed in a comment."
+                        message-when-value-missing="An empty comment cannot be posted." oninput={handleNewComment}>
+                    </textarea>
+                </div>
+                <div class="slds-m-vertical_medium div-button-find-car" onclick={saveComment}>Comment
+                </div>
+            </div>
+        </template>
+        <template if:true={showCommentApprove}>
+            <div class="template-img-style">
+                <div class="slds-p-around_medium lgc-bg div-textarea-style">
+                    <h2>Thank you, your comment is waiting for accept.</h2>
+                </div>
+            </div>
+        </template>
+    </section>
+    <section>
+        <template if:true={showComments}>
             <div class="div-comment-style">
                 <div class="comments-container">
                     <h2>Comments</h2>
-                    <template for:each={comments} for:item="comment">
-                        <ul key={comment.Id} id="comments-list" class="comments-list">
-                            <li>
+                    <ul>
+                        <template for:each={comments} for:item="comment">
+                            <li key={comment.Id} class="comments-list">
                                 <div class="comment-main-level">
-                                    <div class="comment-avatar"><img src={comment.CreatedBy.SmallPhotoUrl}/>
+                                    <div class="comment-avatar"><img src={comment.createdByPicture} />
                                     </div>
                                     <div class="comment-box">
                                         <div class="comment-head">
-                                            <h6 class="comment-name by-author">{comment.CreatedBy.Name}</h6>
+                                            <h6 class="comment-name by-author">{comment.createdByName}</h6>
                                         </div>
                                         <div class="comment-content">
-                                            {comment.CommentText__c}
+                                            {comment.text}
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                        </ul>
-                    </template>
+                        </template>
+                    </ul>
                 </div>
             </div>
         </template>
-        <template if:false={comments}>
+        <template if:false={showComments}>
             <h2>This product doesn't have any comments yet.</h2>
         </template>
     </section>
@@ -189,11 +174,13 @@
                     <div class="slds-notify_container slds-is-relative">
                         <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
                             <span class="slds-assistive-text">{type}</span>
-                            <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top"
-                                  title="Description of icon when needed">
-                              <div class="slds-icon slds-icon_small" aria-hidden="true">
-                                <lightning-icon icon-name="utility:success" alternative-text="Success" title="Success"></lightning-icon>
-                              </div>
+                            <span
+                                class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top"
+                                title="Description of icon when needed">
+                                <div class="slds-icon slds-icon_small" aria-hidden="true">
+                                    <lightning-icon icon-name="utility:success" alternative-text="Success"
+                                        title="Success"></lightning-icon>
+                                </div>
                             </span>
                             <div class="slds-notify__content">
                                 <h2 class="slds-p-vertical_none slds-text-heading_small">{message}</h2>
@@ -201,9 +188,10 @@
                             <div class="slds-notify__close">
                                 <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close">
                                     <div class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                        <lightning-button-icon icon-name="utility:close" size="small" variant="border-filled"
-                                                               class="slds-button slds-button_icon slds-button_icon-inverse"
-                                                               alternative-text="next" onclick={closeModel} ></lightning-button-icon>
+                                        <lightning-button-icon icon-name="utility:close" size="small"
+                                            variant="border-filled"
+                                            class="slds-button slds-button_icon slds-button_icon-inverse"
+                                            alternative-text="next" onclick={closeModel}></lightning-button-icon>
                                     </div>
                                     <span class="slds-assistive-text">Close</span>
                                 </button>

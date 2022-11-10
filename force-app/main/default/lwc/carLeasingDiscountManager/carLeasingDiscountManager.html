@@ -8,23 +8,23 @@
 				<div class="slds-path__scroller">
 					<div class="slds-path__scroller_inner">
 						<ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
-							<li data-id="discountStage" onclick={handleMenuButtonClick} class="slds-path__item slds-is-incomplete"
+							<li data-id="discountStage" class="slds-path__item slds-is-incomplete"
 								role="presentation">
-								<a class="slds-path__link">
+								<a class="slds-path__link sldsStyle">
 									<span class="slds-path__stage"></span>
 									<span class="slds-path__title">Select Discount</span>
 								</a>
 							</li>
-							<li data-id="productStage" onclick={handleMenuButtonClick} class="slds-path__item slds-is-incomplete"
+							<li data-id="productStage" class="slds-path__item slds-is-incomplete"
 								role="presentation">
-								<a class="slds-path__link">
+								<a class="slds-path__link sldsStyle">
 									<span class="slds-path__stage"></span>
 									<span class="slds-path__title">Select Products</span>
 								</a>
 							</li>
-							<li data-id="confirmStage" onclick={handleMenuButtonClick} class="slds-path__item slds-is-incomplete"
+							<li data-id="confirmStage" class="slds-path__item slds-is-incomplete"
 								role="presentation">
-								<a class="slds-path__link">
+								<a class="slds-path__link sldsStyle">
 									<span class="slds-path__stage"></span>
 									<span class="slds-path__title">Confirm</span>
 								</a>
@@ -129,9 +129,6 @@
                     <lightning-card>
                         <div class="slds-m-around_medium">
                             <template if:true={newPrices}>
-
-
-
                                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
                                     <thead>
                                       <tr class="slds-line-height_reset">
