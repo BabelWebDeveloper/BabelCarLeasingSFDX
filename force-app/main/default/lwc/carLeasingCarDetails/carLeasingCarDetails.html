@@ -4,10 +4,9 @@
     </template>
     <p class="slds-hidden">{cartItemsNumber}</p>
     <h2 class="slds-text-heading_medium slds-m-vertical_medium">{manufacturer} {model}</h2>
-    <section style="margin-bottom: 100px">
+    <section>
         <div class="div-img-style">
             <template if:true={listOfGalleryPictures}>
-
                 <div class="custom-carousel-style-whole">
                     <lightning-icon onclick={previous} class="slds-text-link_reset" icon-name="utility:chevronleft"
                         alternative-text="previous" title="previous">
@@ -39,7 +38,7 @@
             <h2 style={priceClass}>{unitPrice} EUR</h2>
             <h2 style={discountPriceClass}>{discountPrice} EUR</h2>
             <h3 class="slds-m-vertical_medium">{label.Monthly_payment} {totalMonthlyPayment} EUR</h3>
-            <form class="slds-m-vertical_medium">
+            <form class="slds-m-vertical_medium form-style">
                 <div class="value-button decrease" onclick={decreaseQuantity}>-</div>
                 <input class="input-style" min="1" type="number" id="number" value={carsQuantity} />
                 <div class="value-button increase" onclick={increaseQuantity}>+</div>
@@ -47,85 +46,92 @@
             <lightning-slider label="Contract period" size="x-small" value={contractPeriod} min="24" step="12" max="48"
                 onchange={setContractPeriod} class="slider-style">
             </lightning-slider>
-            <div class="slds-m-vertical_medium div-button-find-car" onclick={addProductToCart}>{label.Add_to_card}
+            <div class="slds-m-vertical_medium div-button-add-to-cart" onclick={addProductToCart}>{label.Add_to_card}
             </div>
         </div>
     </section>
     <section>
-        <div class="div-details-style">
-            <div class="div-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th scope="col">{label.Horsepower}</th>
-                            <th scope="col">{label.Gearbox}</th>
-                            <th scope="col">{label.Engine}</th>
-                            <th scope="col">Acceleration</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Horsepower">{horsepower}</td>
-                            <td data-label="Gearbox">{gearbox}</td>
-                            <td data-label="Engine">{engine}</td>
-                            <td data-label="Acceleration">{acceleration}</td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th scope="col">Length</th>
-                            <th scope="col">Height</th>
-                            <th scope="col">Width</th>
-                            <th scope="col">{label.Body}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Length">{length}</td>
-                            <td data-label="Height">{height}</td>
-                            <td data-label="Width">{width}</td>
-                            <td data-label="Body">{body}</td>
-                        </tr>
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th scope="col">Fuel consumption</th>
-                            <th scope="col">Number of seats</th>
-                            <th scope="col">Production year</th>
-                            <th scope="col">Size of wheels</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Fuel consumption">{fuelConsumption}</td>
-                            <td data-label="Number of seats">{numberOfSeats}</td>
-                            <td data-label="Production year">{yearOfProduction}</td>
-                            <td data-label="Body">{theSizeOfTheWheels}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-    <section>
-        <div class="div-review-style">
-            <h2>Car review</h2>
-            <iframe src={review} frameborder="0" width="800" height="400"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-            </iframe>
-        </div>
-    </section>
-    <section>
-        <template if:false={showCommentApprove}>
-            <div class="template-img-style">
-                <div class="slds-p-around_medium lgc-bg div-textarea-style">
-                    <p>Enter your comment here:</p>
-                    <textarea class="textarea-style" label="Enter your comment here with a maximum length of 140 characters"
-                         maxlength="140" message-when-too-long="A maximum of 140 characters are allowed in a comment."
-                        message-when-value-missing="An empty comment cannot be posted." oninput={handleNewComment}>
-                    </textarea>
+        <div>
+            <h3 class="slds-text-heading_small slds-m-vertical_medium">Details</h3>
+            <div class="div-details-style">
+                <div class="div-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">{label.Horsepower}</th>
+                                <th scope="col">{label.Gearbox}</th>
+                                <th scope="col">{label.Engine}</th>
+                                <th scope="col">Acceleration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Horsepower">{horsepower}</td>
+                                <td data-label="Gearbox">{gearbox}</td>
+                                <td data-label="Engine">{engine}</td>
+                                <td data-label="Acceleration">{acceleration}</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th scope="col">Length</th>
+                                <th scope="col">Height</th>
+                                <th scope="col">Width</th>
+                                <th scope="col">{label.Body}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Length">{length}</td>
+                                <td data-label="Height">{height}</td>
+                                <td data-label="Width">{width}</td>
+                                <td data-label="Body">{body}</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th scope="col">Fuel consumption</th>
+                                <th scope="col">Number of seats</th>
+                                <th scope="col">Production year</th>
+                                <th scope="col">Size of wheels</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Fuel consumption">{fuelConsumption}</td>
+                                <td data-label="Number of seats">{numberOfSeats}</td>
+                                <td data-label="Production year">{yearOfProduction}</td>
+                                <td data-label="Body">{theSizeOfTheWheels}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="slds-m-vertical_medium div-button-find-car" onclick={saveComment}>Comment
+            </div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <h3 class="slds-text-heading_small slds-m-vertical_medium">Car review</h3>
+            <div class="div-review-style">
+                <iframe src={review} frameborder="0" width="800" height="400"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+    <section class="section-comment-style">
+        <template if:false={showCommentApprove}>
+            <div>
+                <h3 class="slds-text-heading_small slds-m-vertical_medium">Enter your comment here:</h3>
+                <div class="template-comment-style">
+                    <div class="slds-p-around_medium lgc-bg div-textarea-style">
+                        <textarea class="textarea-style" label="Enter your comment here with a maximum length of 140 characters"
+                             maxlength="140" message-when-too-long="A maximum of 140 characters are allowed in a comment."
+                            message-when-value-missing="An empty comment cannot be posted." oninput={handleNewComment}>
+                        </textarea>
+                    </div>
+                    <div class="slds-m-vertical_medium div-button-comment" onclick={saveComment}>Comment
+                    </div>
                 </div>
             </div>
         </template>
@@ -136,36 +142,38 @@
                 </div>
             </div>
         </template>
-    </section>
-    <section>
-        <template if:true={showComments}>
-            <div class="div-comment-style">
-                <div class="comments-container">
-                    <h2>Comments</h2>
-                    <ul>
-                        <template for:each={comments} for:item="comment">
-                            <li key={comment.Id} class="comments-list">
-                                <div class="comment-main-level">
-                                    <div class="comment-avatar"><img src={comment.createdByPicture} />
-                                    </div>
-                                    <div class="comment-box">
-                                        <div class="comment-head">
-                                            <h6 class="comment-name by-author">{comment.createdByName}</h6>
+        <div>
+            <template if:true={showComments}>
+                <div>
+                    <div class="div-comment-style">
+                        <div class="comments-container">
+                            <h3 class="slds-text-heading_small slds-m-vertical_medium">Comments</h3>
+                            <ul>
+                                <template for:each={comments} for:item="comment">
+                                    <li key={comment.Id} class="comments-list">
+                                        <div class="comment-main-level">
+                                            <div class="comment-avatar"><img src={comment.createdByPicture} />
+                                            </div>
+                                            <div class="comment-box">
+                                                <div class="comment-head">
+                                                    <h6 class="comment-name by-author">{comment.createdByName}</h6>
+                                                </div>
+                                                <div class="comment-content">
+                                                    {comment.text}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="comment-content">
-                                            {comment.text}
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </template>
-                    </ul>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </template>
-        <template if:false={showComments}>
-            <h2>This product doesn't have any comments yet.</h2>
-        </template>
+            </template>
+            <template if:false={showComments}>
+                <h2 class="slds-text-heading_small slds-m-vertical_medium">This product doesn't have any comments yet.</h2>
+            </template>
+        </div>
     </section>
     <template if:true={showToastBar}>
         <div class="slds-m-top_large">
