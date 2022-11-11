@@ -46,6 +46,21 @@ public without sharing class CarLeasingCartController {
         return orderItems;
     }
 
+    @AuraEnabled
+    public static String changeOrderItemQuantity(String orderId, Integer quantity){
+        try {
+            List<OrderItem> orderItems = [SELECT Id, Quantity, OrderId FROM OrderItem WHERE Id =: orderId];
+            OrderItem orderItem = orderItems[0];
+            orderItem.Quantity = quantity;
+
+            update orderItem;
+
+            return orderItem.OrderId;
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
     @AuraEnabled(cacheable=true)
     public static String getUserAccountId(String userId) {
         User user = [
@@ -66,61 +81,6 @@ public without sharing class CarLeasingCartController {
         ];
         return user.Account.Id;
     }
-
-    // @AuraEnabled
-    // public static OrderItem createOrderItem(String carId, String manufacturer, String model, String picture,
-    //         Double totalMonthlyPayment, Integer carsQuantity, Integer contractPeriod, Double startFee,
-    //         Double unitPrice) {
-    //     try {
-    //         String userId2 = getUser().Id;
-    //         String orderId2 = getUserOrder().Id;
-    //         List<OrderItem> orderItems = checkIfOrderItemExist(carId, userId2, orderId2);
-    //         if (orderItems.size() > 0) {
-    //             System.debug(orderItems);
-    //             for (OrderItem orderItem : orderItems){
-    //                 orderItem.Quantity = orderItem.Quantity + carsQuantity;
-    //             }
-    //             System.debug(orderItems);
-    //             update orderItems;
-    //         } else {
-    //             String pricebookId = getStandardPricebookId();
-    //             String pricebookEntryId = getPricebookEntryId(carId);
-    //             String userAccountId2 = getUserAccountId2();
-
-    //             if (orderId2 == null) {
-    //                 Order order = new Order();
-    //                 order.AccountId = userAccountId2;
-    //                 order.EffectiveDate = System.today();
-    //                 order.Status = CarLeasingSettingService.ORDER_STATUS_DRAFT;
-    //                 order.PriceBook2Id = pricebookId;
-    //                 insert order;
-
-    //                 OrderItem lineItem = new OrderItem();
-    //                 lineItem.OrderId = order.id;
-    //                 lineItem.Quantity = carsQuantity;
-    //                 lineItem.UnitPrice = unitPrice;
-    //                 lineItem.Product2id = carId;
-    //                 lineItem.PricebookEntryId = pricebookEntryId;
-    //                 insert lineItem;
-    //                 return lineItem;
-
-    //             } else {
-    //                 OrderItem lineItem = new OrderItem();
-    //                 lineItem.OrderId = orderId2;
-    //                 lineItem.Quantity = carsQuantity;
-    //                 lineItem.UnitPrice = unitPrice;
-    //                 lineItem.Product2id = carId;
-    //                 lineItem.PricebookEntryId = pricebookEntryId;
-    //                 insert lineItem;
-    //                 return lineItem;
-    //             }
-    //         }
-    //     } catch (Exception e) {
-    //         System.debug(e);
-    //         return null;
-    //     }
-    //     return null;
-    // }
 
     @AuraEnabled
     public static OrderItem createOrderItem(String userId, String carId, String manufacturer, String model, String picture,

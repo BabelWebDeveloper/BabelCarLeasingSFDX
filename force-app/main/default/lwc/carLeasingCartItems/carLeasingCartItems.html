@@ -1,4 +1,7 @@
 <template>
+    <template if:true={isLoading}>
+        <c-spinner></c-spinner>
+    </template>
     <template if:true={showConnectedMessage}>
         <h2 class="slds-text-heading_medium slds-m-vertical_medium">{label.Cart_items}</h2>
         <section>
@@ -11,6 +14,19 @@
                             <c-car-leasing-tile
                                     car={car}>
                             </c-car-leasing-tile>
+                            <p class="slds-text-body_small div-text-center">Unit price: {car.UnitPrice} EUR</p>
+                            <p class="slds-text-body_small div-text-center">Total price: {car.totalPrice} EUR</p>
+                            <form class="slds-m-vertical_medium slds-align_absolute-center">
+                                <div class="value-button decrease" 
+                                data-id={car.Id} 
+                                data-quantity={car.Quantity} 
+                                onclick={decreaseQuantity}>-</div>
+                                <input class="input-style" min="1" type="number" id="number" value={car.Quantity} />
+                                <div class="value-button increase" 
+                                data-id={car.Id} 
+                                data-quantity={car.Quantity}  
+                                onclick={increaseQuantity}>+</div>
+                            </form>
                             <c-car-leasing-delete-item-from-cart
                                     car={car}
                                     onshowmessage={showDeleteMessage}>
@@ -20,17 +36,8 @@
                 </lightning-layout>
             </div>
             <div class="div-checkout">
-                <h2>{label.Summary}</h2>
-                <template for:each={checkoutItems} for:item="item">
-                    <div key={item.cartItemId}>
-                        <p>{item.cartItemManufacturer} {item.cartItemModel}</p>
-                        <div class="div-checkout-vertically">
-                            <p>{label.Piece} {item.cartItemQuantity}</p>
-                            <p>{item.cartItemCostItem} EUR</p>
-                        </div>
-                        <hr>
-                    </div>
-                </template>
+                <h2>Checkout</h2>
+                <hr>
                 <p class="p-total-cost">{label.Total_cost} {totalCost} EUR</p>
                 <div>
                     <div class="inputWithIcon">
@@ -87,7 +94,7 @@
                                     <div class="slds-button__icon slds-button__icon_large" aria-hidden="true">
                                         <lightning-button-icon icon-name="utility:close" size="small" variant="border-filled"
                                                                class="slds-button slds-button_icon slds-button_icon-inverse"
-                                                               alternative-text="next" onclick={closeModel} ></lightning-button-icon>
+                                                               alternative-text="next" onclick={closeModal} ></lightning-button-icon>
                                     </div>
                                     <span class="slds-assistive-text">Close</span>
                                 </button>
