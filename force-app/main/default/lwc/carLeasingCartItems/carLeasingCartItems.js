@@ -7,7 +7,9 @@ import Your_cart_is_empty from '@salesforce/label/c.Your_cart_is_empty';
 import Piece from '@salesforce/label/c.Piece';
 import Summary from '@salesforce/label/c.Summary';
 import Total_cost from '@salesforce/label/c.Total_cost';
-import LightningAlert from 'lightning/alert';
+
+import userId from '@salesforce/user/Id';
+import userOrder from '@salesforce/apex/CarLeasingCartController.getUserOrder';
 
 export default class CarLeasingCartItems extends LightningElement {
     @track
@@ -17,6 +19,7 @@ export default class CarLeasingCartItems extends LightningElement {
     checkoutItems = [];
     message = '';
     showConnectedMessage = false;
+    userId;
 
     billingStreet = '';
     billingCity = '';
@@ -34,21 +37,14 @@ export default class CarLeasingCartItems extends LightningElement {
     }
 
     connectedCallback() {
-        let record = this.getOrderId();
-        this.orderId = record.recordId;
-    }
-
-    getOrderId() {
-        let params = {};
-        let search = location.search.substring(1);
-
-        if (search) {
-            params = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', (key, value) => {
-                return key === "" ? value : decodeURIComponent(value)
-            });
-        }
-
-        return params;
+        this.userId = userId;
+        userOrder()
+        .then(result => {
+            console.log(result);
+            if(result){
+                this.orderId = result.Id;
+            }
+        })
     }
 
     @wire(userOrderItems, {orderId: '$orderId'})

@@ -10,14 +10,26 @@ public without sharing class CarLeasingCartController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static Order getUserOrder(String userId) {
+    public static Order getUserOrder() {
         Order order = [
                 SELECT Id, OwnerId, Status
                 FROM Order
-                WHERE OwnerId = :userId
-                AND Status = :CarLeasingSettingService.ORDER_STATUS_DRAFT
+                WHERE OwnerId =: getUser().Id
+                AND Status =: CarLeasingSettingService.ORDER_STATUS_DRAFT
         ];
         return order;
+    }
+
+    public static User getUser() {
+        List<User> users = [
+            SELECT Id, FirstName, LastName, Title, FullPhotoUrl, Contact.Id
+            FROM User
+            WHERE Id =: UserInfo.getUserId()
+        ];
+        if(users.isEmpty()) {
+            return null;
+        }
+        return users[0];
     }
 
     @AuraEnabled(cacheable=true)
@@ -44,12 +56,76 @@ public without sharing class CarLeasingCartController {
         return user.Account.Id;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static String getUserAccountId2() {
+        String userId2 = getUser().Id;
+        User user = [
+                SELECT Account.Id
+                FROM User
+                WHERE Id =: userId2
+        ];
+        return user.Account.Id;
+    }
+
+    // @AuraEnabled
+    // public static OrderItem createOrderItem(String carId, String manufacturer, String model, String picture,
+    //         Double totalMonthlyPayment, Integer carsQuantity, Integer contractPeriod, Double startFee,
+    //         Double unitPrice) {
+    //     try {
+    //         String userId2 = getUser().Id;
+    //         String orderId2 = getUserOrder().Id;
+    //         List<OrderItem> orderItems = checkIfOrderItemExist(carId, userId2, orderId2);
+    //         if (orderItems.size() > 0) {
+    //             System.debug(orderItems);
+    //             for (OrderItem orderItem : orderItems){
+    //                 orderItem.Quantity = orderItem.Quantity + carsQuantity;
+    //             }
+    //             System.debug(orderItems);
+    //             update orderItems;
+    //         } else {
+    //             String pricebookId = getStandardPricebookId();
+    //             String pricebookEntryId = getPricebookEntryId(carId);
+    //             String userAccountId2 = getUserAccountId2();
+
+    //             if (orderId2 == null) {
+    //                 Order order = new Order();
+    //                 order.AccountId = userAccountId2;
+    //                 order.EffectiveDate = System.today();
+    //                 order.Status = CarLeasingSettingService.ORDER_STATUS_DRAFT;
+    //                 order.PriceBook2Id = pricebookId;
+    //                 insert order;
+
+    //                 OrderItem lineItem = new OrderItem();
+    //                 lineItem.OrderId = order.id;
+    //                 lineItem.Quantity = carsQuantity;
+    //                 lineItem.UnitPrice = unitPrice;
+    //                 lineItem.Product2id = carId;
+    //                 lineItem.PricebookEntryId = pricebookEntryId;
+    //                 insert lineItem;
+    //                 return lineItem;
+
+    //             } else {
+    //                 OrderItem lineItem = new OrderItem();
+    //                 lineItem.OrderId = orderId2;
+    //                 lineItem.Quantity = carsQuantity;
+    //                 lineItem.UnitPrice = unitPrice;
+    //                 lineItem.Product2id = carId;
+    //                 lineItem.PricebookEntryId = pricebookEntryId;
+    //                 insert lineItem;
+    //                 return lineItem;
+    //             }
+    //         }
+    //     } catch (Exception e) {
+    //         System.debug(e);
+    //         return null;
+    //     }
+    //     return null;
+    // }
+
     @AuraEnabled
     public static OrderItem createOrderItem(String userId, String carId, String manufacturer, String model, String picture,
             Double totalMonthlyPayment, Integer carsQuantity, Integer contractPeriod, Double startFee,
             String orderId, String userAccountId, Double unitPrice) {
-        System.debug('backend');
-
         try {
             List<OrderItem> orderItems = checkIfOrderItemExist(carId, userId, orderId);
             if (orderItems.size() > 0) {
