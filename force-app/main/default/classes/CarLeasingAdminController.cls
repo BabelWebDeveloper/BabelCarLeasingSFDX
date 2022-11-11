@@ -8,7 +8,7 @@ public without sharing class CarLeasingAdminController {
     @AuraEnabled
     public static String saveCarLwc(CarLeasingWrapper carWrapper) {
         String productCode = 'CL' + carWrapper.manufacturer.toUpperCase() + carWrapper.model.toUpperCase();
-        String productName = carWrapper.manufacturer + carWrapper.model;
+        String productName = carWrapper.manufacturer + ' ' + carWrapper.model;
 
         CarLeasingCarBuilder carBuilder = new CarLeasingCarBuilder();
         carBuilder.setPicture(carWrapper.pictureUrl);
