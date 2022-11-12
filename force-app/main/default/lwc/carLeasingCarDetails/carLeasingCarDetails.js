@@ -277,15 +277,15 @@ export default class CarLeasingCarDetails extends LightningElement {
     }
 
     handleNewComment(event) {
-        if (event.target.value === null || event.target.value.trim() === ""){
-            this.newCommentText = event.target.value;
-        }
+        console.log(event.target.value);
+        this.newCommentText = event.target.value;
     }
 
     saveComment(){
         if (this.newCommentText === null || this.newCommentText.trim() === "") {
             this.showEmptyCommentField = true;
         } else {
+            console.log(this.newCommentText);
             this.showEmptyCommentField = false;
             this.showCommentApprove = true;
         }

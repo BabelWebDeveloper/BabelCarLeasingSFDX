@@ -23,7 +23,7 @@ export default class CarLeasingNav extends LightningElement {
     isLoading;
 
     connectedCallback(){
-        this.isLoading = true;
+        // this.isLoading = true;
     }
 
     label = {

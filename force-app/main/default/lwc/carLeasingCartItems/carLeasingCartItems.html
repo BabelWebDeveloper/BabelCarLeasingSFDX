@@ -19,7 +19,8 @@
                             <form class="slds-m-vertical_medium slds-align_absolute-center">
                                 <div class="value-button decrease" 
                                 data-id={car.Id} 
-                                data-quantity={car.Quantity} 
+                                data-quantity={car.Quantity}
+                                aria-disabled="true"
                                 onclick={decreaseQuantity}>-</div>
                                 <input class="input-style" min="1" type="number" id="number" value={car.Quantity} />
                                 <div class="value-button increase" 

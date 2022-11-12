@@ -199,10 +199,10 @@ export default class CarLeasingCartItems extends LightningElement {
     }
 
     decreaseQuantity(event) {
-        this.isLoading = true; 
         let orderItemId = event.target.dataset.id;
         let quantity = event.target.dataset.quantity;
         if (quantity > 1) {
+            this.isLoading = true;
             let newQuantity = quantity - 1;
             changeOrderItemQuantity({
                 orderId: orderItemId,
