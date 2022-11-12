@@ -1,4 +1,7 @@
 <template>
+    <template if:true={isLoading}>
+        <c-spinner></c-spinner>
+    </template>
     <div class="nav-div">
         <nav class="nav-style">
             <div class="logo-img-style">

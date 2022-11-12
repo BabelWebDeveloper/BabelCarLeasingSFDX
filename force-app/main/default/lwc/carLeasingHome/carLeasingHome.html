@@ -1,4 +1,7 @@
 <template>
+    <template if:true={isLoading}>
+        <c-spinner></c-spinner>
+    </template>
     <section style={backgroundStyle}>
         <aside>
             <h2>{label.Find_your_perfect_lease}</h2>
@@ -7,11 +10,6 @@
                 <li>{label.Flexible_financing}</li>
                 <li>{label.Extra_benefits}</li>
             </ul>
-<!--            <div class="div-button-find-car">{label.Find_your_car}-->
-<!--                <a href="/bcl/search-by-manufacturer">-->
-<!--                    <span class="anchor-style-find-car"></span>-->
-<!--                </a>-->
-<!--            </div>-->
         </aside>
     </section>
 </template>

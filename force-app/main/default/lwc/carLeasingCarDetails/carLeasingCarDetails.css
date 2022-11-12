@@ -66,6 +66,10 @@ section {
     display: flex;
     flex-direction: column;
 }
+
+.comment-p-style{
+    color: red;
+}
 .textarea-style{
     min-height: 100px;
     max-height: 150px;

@@ -20,6 +20,11 @@ export default class CarLeasingNav extends LightningElement {
     picture;
     @track
     error;
+    isLoading;
+
+    connectedCallback(){
+        this.isLoading = true;
+    }
 
     label = {
         carLeasingLogoTransparent
@@ -37,6 +42,7 @@ export default class CarLeasingNav extends LightningElement {
         } else if (error) {
             this.error = error;
         }
+        this.isLoading = false;
     }
 
     out() {

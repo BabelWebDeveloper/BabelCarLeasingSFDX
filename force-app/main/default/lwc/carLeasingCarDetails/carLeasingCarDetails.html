@@ -1,6 +1,6 @@
 <template>
     <template if:true={isLoading}>
-        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        <c-spinner></c-spinner>
     </template>
     <p class="slds-hidden">{cartItemsNumber}</p>
     <h2 class="slds-text-heading_medium slds-m-vertical_medium">{manufacturer} {model}</h2>
@@ -46,8 +46,15 @@
             <lightning-slider label="Contract period" size="x-small" value={contractPeriod} min="24" step="12" max="48"
                 onchange={setContractPeriod} class="slider-style">
             </lightning-slider>
-            <div class="slds-m-vertical_medium div-button-add-to-cart" onclick={addProductToCart}>{label.Add_to_card}
-            </div>
+            <template if:false={isGuestUser}>
+                <div class="slds-m-vertical_medium div-button-add-to-cart" onclick={addProductToCart}>{label.Add_to_card}
+                </div>
+            </template>
+            <template if:true={isGuestUser}>
+                <div class="slds-p-around_medium lgc-bg div-textarea-style">
+                    <p class="comment-p-style">Only logged users can add to cart.</p>
+                </div>
+            </template>
         </div>
     </section>
     <section>
@@ -120,18 +127,34 @@
         </div>
     </section>
     <section class="section-comment-style">
-        <template if:false={showCommentApprove}>
-            <div>
-                <h3 class="slds-text-heading_small slds-m-vertical_medium">Enter your comment here:</h3>
-                <div class="template-comment-style">
-                    <div class="slds-p-around_medium lgc-bg div-textarea-style">
-                        <textarea class="textarea-style" label="Enter your comment here with a maximum length of 140 characters"
-                             maxlength="140" message-when-too-long="A maximum of 140 characters are allowed in a comment."
-                            message-when-value-missing="An empty comment cannot be posted." oninput={handleNewComment}>
-                        </textarea>
+        <template if:false={isGuestUser}>
+            <template if:false={showCommentApprove}>
+                <div>
+                    <template if:true={showEmptyCommentField}>
+                        <div class="template-img-style">
+                            <div class="slds-p-around_medium lgc-bg div-textarea-style">
+                                <p class="comment-p-style">You can't send empty comment</p>
+                            </div>
+                        </div>
+                    </template>
+                    <h3 class="slds-text-heading_small slds-m-vertical_medium">Enter your comment here:</h3>
+                    <div class="template-comment-style">
+                        <div class="slds-p-around_medium lgc-bg div-textarea-style">
+                            <textarea class="textarea-style" label="Enter your comment here with a maximum length of 140 characters"
+                                 maxlength="140" message-when-too-long="A maximum of 140 characters are allowed in a comment."
+                                message-when-value-missing="An empty comment cannot be posted." oninput={handleNewComment}>
+                            </textarea>
+                        </div>
+                        <div class="slds-m-vertical_medium div-button-comment" onclick={saveComment}>Comment
+                        </div>
                     </div>
-                    <div class="slds-m-vertical_medium div-button-comment" onclick={saveComment}>Comment
-                    </div>
+                </div>
+            </template>
+        </template>
+        <template if:true={isGuestUser}>
+            <div class="template-img-style">
+                <div class="slds-p-around_medium lgc-bg div-textarea-style">
+                    <p class="comment-p-style">Only logged users can write comments.</p>
                 </div>
             </div>
         </template>

@@ -8,6 +8,7 @@ import Extra_benefits  from '@salesforce/label/c.Extra_benefits';
 import Find_your_car  from '@salesforce/label/c.Find_your_car';
 
 export default class CarLeasingHome extends LightningElement {
+
     get backgroundStyle() {
         return `height:50rem;background-image:url(${backgroundUrl})`;
     }

@@ -12,9 +12,11 @@ import Horsepower from '@salesforce/label/c.Horsepower';
 import Gearbox from '@salesforce/label/c.Gearbox';
 import Engine from '@salesforce/label/c.Engine';
 import Body from '@salesforce/label/c.Body';
+import isGuest from '@salesforce/user/isGuest';
 
 export default class CarLeasingCarDetails extends LightningElement {
     carId;
+    isGuestUser = isGuest;
 
     @track
     car;
@@ -46,6 +48,7 @@ export default class CarLeasingCarDetails extends LightningElement {
     pictureComment;
     showComments;
     showCommentApprove = false;
+    showEmptyCommentField = false;
 
     maxStartFee;
     stepOfFee;
@@ -54,56 +57,26 @@ export default class CarLeasingCarDetails extends LightningElement {
     startFee = 0;
     monInt = this.intRate / 1200;
     carsQuantity = 1;
-    newCommentText;
-
-    handleNewComment(event) {
-        this.newCommentText = event.target.value;
-        console.log(this.newCommentText);
-    }
-
-    saveComment(){
-        this.showCommentApprove = true;
-        // saveNewComment({
-        //     product2Id: this.carId,
-        //     commentText: this.newCommentText
-        // })
-        // .then(() => {
-        //     this.retrieveAllComments();
-        // })
-    }
+    newCommentText = '';
+    
 
     connectedCallback() {
-        let record = this.getQueryCarId();
-        this.carId = record.recordId;
+        this.isLoading = true;
+        this.carId = this.getQueryCarId().recordId;
         listOfGalleryUrl({
             productId: this.carId
         })
         .then((result) => {
-            this.listOfGalleryPictures = result;
+            if (result) {
+                this.listOfGalleryPictures = result;
+            } else {
+                this.isLoading = false;
+            }
         })
         .then(() => {
             this.retrieveAllComments();
         })
         
-    }
-
-    retrieveAllComments(){
-        getAllComments({
-            product2Id: this.carId
-        })
-        .then(results => {
-            if (results.length > 0) {
-                this.showComments = true;
-                this.comments = results.map((result) => ({
-                    text: result.CommentText__c,
-                    createdByPicture: 'https://bwd2-dev-ed.file.force.com/' + result.CreatedBy.SmallPhotoUrl,
-                    createdByName: result.CreatedBy.Name,
-                    rating: result.Rating__c
-                }));
-            } else{
-                this.showComments = false;
-            }
-        })
     }
 
     @wire(MessageContext)
@@ -266,6 +239,7 @@ export default class CarLeasingCarDetails extends LightningElement {
         this.icon = icon;
         this.autoCloseTime = time;
         this.showToastBar = true;
+        this.isLoading = false;
         setTimeout(() => {
             this.closeModel();
         }, this.autoCloseTime);
@@ -284,21 +258,68 @@ export default class CarLeasingCarDetails extends LightningElement {
 
     next(){
         if(this.style < this.carouselSize){
-        this.style += 100;
+            this.style += 100;
         } else {
-        this.style = this.carouselSize;
+            this.style = this.carouselSize;
         }
     }
 
     previous(){
         if(this.style >= 0){
-        this.style -= 100;
+            this.style -= 100;
         } else {
-        this.style = 0;
+            this.style = 0;
         }
     }
 
     get myStyle(){
         return 'transform:translateX(-' + this.style + '%)';
+    }
+
+    handleNewComment(event) {
+        if (event.target.value === null || event.target.value.trim() === ""){
+            this.newCommentText = event.target.value;
+        }
+    }
+
+    saveComment(){
+        if (this.newCommentText === null || this.newCommentText.trim() === "") {
+            this.showEmptyCommentField = true;
+        } else {
+            this.showEmptyCommentField = false;
+            this.showCommentApprove = true;
+        }
+        
+        // saveNewComment({
+        //     product2Id: this.carId,
+        //     commentText: this.newCommentText
+        // })
+        // .then(() => {
+        //     this.retrieveAllComments();
+        // })
+    }
+
+    retrieveAllComments(){
+        getAllComments({
+            product2Id: this.carId
+        })
+        .then(results => {
+            if (results) {
+                if (results.length > 0) {
+                    this.showComments = true;
+                    this.comments = results.map((result) => ({
+                        text: result.CommentText__c,
+                        createdByPicture: 'https://bwd2-dev-ed.file.force.com/' + result.CreatedBy.SmallPhotoUrl,
+                        createdByName: result.CreatedBy.Name,
+                        rating: result.Rating__c
+                    }));
+                } else{
+                    this.showComments = false;
+                }
+                this.isLoading = false;
+            } else {
+                this.isLoading = false;
+            }
+        })
     }
 }
