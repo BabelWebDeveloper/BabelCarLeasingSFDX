@@ -11,6 +11,9 @@ table{
     width: 50%;
     margin-top: 100px;
 }
+thead{
+    line-height: 50px;
+}
 th, td {
     width: 33%;
     text-align: center;

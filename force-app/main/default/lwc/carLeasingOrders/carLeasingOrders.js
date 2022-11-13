@@ -18,7 +18,7 @@ export default class CarLeasingOrders extends LightningElement {
     caseReasonOptions;
     isNewCaseModalOpen = false;
     
-    caseType;
+    caseType = 'Mechanical';
     reasonType;
     subject;
     description;

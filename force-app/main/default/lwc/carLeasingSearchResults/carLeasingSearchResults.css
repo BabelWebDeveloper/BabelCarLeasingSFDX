@@ -1,4 +1,14 @@
 .div-wrap {
     border: 2px solid #FD6B02;
     margin: 0 20px 20px 0;
+    border: 3px solid #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 1px 2px 24px 0px rgb(0 0 0 / 20%);
+    -moz-box-shadow: 1px 2px 24px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 2px 4px 0px rgb(0 0 0 / 20%);
+}
+.layout-results-style{
+    margin-top: 50px;
 }

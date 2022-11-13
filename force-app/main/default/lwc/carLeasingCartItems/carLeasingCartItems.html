@@ -14,24 +14,26 @@
                             <c-car-leasing-tile
                                     car={car}>
                             </c-car-leasing-tile>
-                            <p class="slds-text-body_small div-text-center">Unit price: {car.UnitPrice} EUR</p>
-                            <p class="slds-text-body_small div-text-center">Total price: {car.totalPrice} EUR</p>
-                            <form class="slds-m-vertical_medium slds-align_absolute-center">
-                                <div class="value-button decrease" 
-                                data-id={car.Id} 
-                                data-quantity={car.Quantity}
-                                aria-disabled="true"
-                                onclick={decreaseQuantity}>-</div>
-                                <input class="input-style" min="1" type="number" id="number" value={car.Quantity} />
-                                <div class="value-button increase" 
-                                data-id={car.Id} 
-                                data-quantity={car.Quantity}  
-                                onclick={increaseQuantity}>+</div>
-                            </form>
-                            <c-car-leasing-delete-item-from-cart
-                                    car={car}
-                                    onshowmessage={showDeleteMessage}>
-                            </c-car-leasing-delete-item-from-cart>
+                            <div class="cart-items-details-div">
+                                <p class="slds-text-body_small div-text-center">Unit price: {car.UnitPrice} EUR</p>
+                                <p class="slds-text-body_small div-text-center">Total price: {car.totalPrice} EUR</p>
+                                <form class="slds-m-vertical_medium slds-align_absolute-center">
+                                    <div class="value-button decrease" 
+                                    data-id={car.Id} 
+                                    data-quantity={car.Quantity}
+                                    aria-disabled="true"
+                                    onclick={decreaseQuantity}>-</div>
+                                    <input class="input-style" min="1" type="number" id="number" value={car.Quantity} />
+                                    <div class="value-button increase" 
+                                    data-id={car.Id} 
+                                    data-quantity={car.Quantity}  
+                                    onclick={increaseQuantity}>+</div>
+                                </form>
+                                <c-car-leasing-delete-item-from-cart
+                                        car={car}
+                                        onshowmessage={showDeleteMessage}>
+                                </c-car-leasing-delete-item-from-cart>
+                            </div>
                         </lightning-layout-item>
                     </template>
                 </lightning-layout>

@@ -53,6 +53,9 @@ export default class CarLeasingCartItems extends LightningElement {
         .catch((error) => {
             this.error = error;
         })
+        .finally(() => {
+            this.isLoading = false; 
+        });
     }
 
     @wire(userOrderItems, {orderId: '$orderId'})

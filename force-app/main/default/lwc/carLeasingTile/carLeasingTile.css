@@ -1,11 +1,18 @@
-section{
+/* section{
     height: 400px;
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
     cursor: pointer;
+} */
+section{
+    height: 250px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    cursor: pointer;
 }
-.tile {
+/* .tile {
     height: 500px;
     padding: 1px !important;
     border-radius: 5px;
@@ -17,9 +24,26 @@ section{
     display: flex !important;
     align-items: flex-end !important;
     justify-content: center!important;
+} */
+.tile {
+    height: 100px;
+    padding: 1px !important;
+    border-radius: 5px;
+    width: 100% !important;
+    background-color: transparent !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center!important;
 }
-.tile-img{
+/* .tile-img{
     width: 100%;
+} */
+.tile-img{
+    width: auto;
+    max-height: 100px;
 }
 
 .selected {
