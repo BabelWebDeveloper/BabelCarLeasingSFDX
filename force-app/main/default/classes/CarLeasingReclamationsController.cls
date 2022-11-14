@@ -1,7 +1,7 @@
 public without sharing class CarLeasingReclamationsController {
     @AuraEnabled(cacheable=true)
     public static List<Case> getAllCases() {
-        return [SELECT OwnerId, Type, CreatedDate, Product.Model__c, Product.Manufacturer__c 
+        return [SELECT OwnerId, Type, CreatedDate, Product.Model__c, Description, Product.Manufacturer__c 
         FROM Case 
         WHERE OwnerId =: getUser().Id];
     }

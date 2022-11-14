@@ -2,8 +2,8 @@
     <template if:true={isLoading}>
         <c-spinner></c-spinner>
     </template>
+    <h2 class="slds-text-heading_medium slds-m-vertical_medium">{label.Cart_items}</h2>
     <template if:true={showConnectedMessage}>
-        <h2 class="slds-text-heading_medium slds-m-vertical_medium">{label.Cart_items}</h2>
         <section>
             <div class="slds-scrollable_y div-items">
                 <lightning-layout horizontal-align="center" multiple-rows class="cart-layout-style">
@@ -74,7 +74,8 @@
         </section>
     </template>
     <template if:false={showConnectedMessage}>
-        <h2>{label.Your_cart_is_empty}</h2>
+        <h2 class="slds-text-heading_medium slds-m-vertical_medium">{label.Your_cart_is_empty}</h2>
+        <div class="div-table-style"></div>
     </template>
     <template if:true={showToastBar}>
         <div class="slds-m-top_large">

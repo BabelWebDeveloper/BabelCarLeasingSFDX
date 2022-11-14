@@ -133,6 +133,9 @@ section{
     flex-direction: row;
     justify-content: space-around;
 }
+.div-table-style{
+    min-height: 80vh;
+}
 
 
 /*++++++++++++*/

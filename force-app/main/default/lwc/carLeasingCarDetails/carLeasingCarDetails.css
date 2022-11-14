@@ -166,7 +166,7 @@ section {
     position: relative;
     background: #FD6B02;
     border-radius: 20px;
-    text-align: right;
+    text-align: center;
     padding: 0.2em 1em;
     width: fit-content;
     margin: 0 0 0 88.5%;
@@ -483,6 +483,9 @@ body {
 .value-button:hover{
     background-color: rgb(80, 33, 0);
 }
+.slider-style{
+    text-align: center;
+}
 
 .input-style {
     text-align: center;
@@ -502,9 +505,6 @@ iframe{
     width: 1020px!important;
     height: 1020px!important;
 }
-p{
-    width: 70%;
-}
 .toast-bar-style{
     background-color: #FD6B02;
 }
@@ -522,6 +522,8 @@ p{
     height: 400px;
     overflow: hidden;
     margin: auto;
+    display: flex;
+    align-items: center;
 }
 img{
     width: 100%;
@@ -558,3 +560,62 @@ img{
 .comment-section{
     padding-top: 30px;
 }
+.ratings-box{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  .ratings-box__item label{
+    position: relative;
+    cursor: pointer;
+    display: block;
+  }
+  .ratings-box__item label input{
+    display: none;
+    position: absolute;
+  }
+  .ratings-box{
+    position: relative;
+  }
+  .ratings-box__item p{
+    display: inline-block;
+    position: absolute;
+    color: #FFF;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    opacity: 0;
+    pointer-events: none;
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+  .ratings-box__item label span.rating-star{
+    width: 30px;
+    height: 30px;
+    display: block;
+    background: #FD6B02;
+    position: relative;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  
+  .ratings-box__item label span.rating-star::after{
+     content: '';
+     position: absolute;
+     width: 20px;
+    height: 20px;
+    background: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  .ratings-box:has(.ratings-box__item label input:checked) .ratings-box__item span.rating-star::after{
+    transform: translate(-50%, -50%) scale(0);
+  }
+  .ratings-box__item:has(label > input:checked) ~ .ratings-box__item label .star-line-box span.rating-star::after{
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .ratings-box__item:has(label > input:checked) p{
+    opacity: 1;
+  }

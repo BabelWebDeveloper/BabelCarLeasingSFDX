@@ -16,6 +16,7 @@
                   <h2>{item.Product2.Manufacturer__c} {item.Product2.Model__c}</h2>
                   <p>{label.Quantity} {item.Quantity}</p>
                   <p>{label.Totalcost} {item.TotalPrice} {label.EUR}</p>
+                  <p>Order status: pending</p>
                   <div data-target-id={item.Id} class="div-button-report-case" onclick={openCaseModal}>Report a problem
                   </div>
                 </div>
@@ -27,7 +28,9 @@
     </div>
   </template>
   <template if:true={showConnectedMessage}>
-    <h2 class="slds-text-heading_medium slds-m-vertical_medium">{label.You_haven_t_had_any_orders_yet}</h2>
+    <div class="orders-div-style">
+      <h2 class="slds-text-heading_medium slds-m-vertical_medium">You don't have any orders.</h2>
+    </div>
   </template>
   <template if:true={isNewCaseModalOpen}>
     <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"

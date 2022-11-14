@@ -1,5 +1,9 @@
 <template>
+    <template if:true={isLoading}>
+        <c-spinner></c-spinner>
+    </template>
     <h2 class="slds-text-heading_medium slds-m-vertical_medium">Reclamations</h2>
+    <template if:false={showConnectedMessage}>
         <div class="slds-m-around_medium div-table-style">
             <template if:true={cases}>
                 <table class="">
@@ -14,19 +18,25 @@
                             <th class="" scope="col">
                                 <div class="" title="Date">Date</div>
                             </th>
+                            <th class="" scope="col">
+                                <div class="" title="Status">Status</div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <template for:each={cases} for:item="record">
                             <tr class="row-style" key={record.Id}>
-                                <td data-label="Opportunity Name" scope="row">
+                                <td data-label="" scope="row">
                                     <div class="">{record.Product.Manufacturer__c} {record.Product.Model__c}</div>
                                 </td>
-                                <td data-label="Opportunity Name" scope="row">
+                                <td data-label="" scope="row">
                                     <div class="">{record.Type}</div>
                                 </td>
-                                <td data-label="Opportunity Name" scope="row">
+                                <td data-label="" scope="row">
                                     <div class="">{record.CreatedDate}</div>
+                                </td>
+                                <td data-label="" scope="row">
+                                    <div class="">Pending</div>
                                 </td>
                             </tr>
                             <br key={record.Id}>
@@ -35,4 +45,9 @@
                 </table>
             </template>
         </div>
+    </template>
+    <template if:true={showConnectedMessage}>
+        <h2 style="padding-top: 75px;" class="slds-text-heading_medium slds-m-vertical_medium">You don't have any reclamations.</h2>
+        <div class="div-table-style"></div>
+    </template>
 </template>

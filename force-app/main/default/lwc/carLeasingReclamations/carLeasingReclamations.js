@@ -4,31 +4,41 @@ import allCases from '@salesforce/apex/CarLeasingReclamationsController.getAllCa
 export default class CarLeasingReclamations extends LightningElement {
     @track
     cases;
+    showConnectedMessage = false;
+    isLoading;
 
     connectedCallback() {
+        this.isLoading = true;
         this.getAllCases();
     }
 
     getAllCases(){
         allCases({})
         .then(results => {
-            this.reformatResults(results);
+            if(results){
+                this.reformatResults(results);
+                if(results.length > 0){
+                    this.showConnectedMessage = false;
+                } else {
+                    this.showConnectedMessage = true;
+                }
+            }
+            else{
+                this.isLoading = false;
+            }
         })
     }
 
     reformatResults(result){
-        console.log(result);
         let tempProps = JSON.parse(JSON.stringify(result));
         if(result){
-            if (result){
-                tempProps.forEach(record => {
-                    record.CreatedDate = record.CreatedDate.slice(0, -8).replace('T', ' ');
-                    Object.preventExtensions(tempProps);
-                });
+            tempProps.forEach(record => {
+                record.CreatedDate = record.CreatedDate.slice(0, -8).replace('T', ' ');
                 Object.preventExtensions(tempProps);
-                this.cases = tempProps;
-                console.log(this.cases);
-            }
+            });
+            Object.preventExtensions(tempProps);
+            this.cases = tempProps;
         }
+        this.isLoading = false;
     }
 }

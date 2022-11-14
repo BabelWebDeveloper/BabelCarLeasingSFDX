@@ -1,0 +1,27 @@
+a {
+    color: rgba(255, 255, 255, 1) !important;
+    text-decoration: none !important;
+}
+
+.footer-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    line-height: 100px;
+    width: 100%;
+    height: 100px;
+    margin: 0;
+}
+
+h2{
+    color: rgba(253, 107, 2, 1);
+}
+
+.footer-nav-style {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+}

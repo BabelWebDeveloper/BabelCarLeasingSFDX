@@ -1,6 +1,9 @@
 .div-class-orders {
     margin-bottom: 20px;
     height: 300px;
+    max-width: 500px;
+    display: flex;
+    align-items: flex-end;
 }
 .style-img-orders {
     width: 100%;
@@ -53,6 +56,7 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 300px;
 }
 .div-class-order-details > * {
     padding: 10px 0;
@@ -66,6 +70,7 @@ p {
     text-align: center;
     color: black;
     cursor: pointer;
+    margin: 0 auto;
 }
 .div-button-report-case:hover {
     background-color: #FD6B02;
@@ -75,4 +80,7 @@ p {
 }
 .report-problem-button{
     background-color: #FD6B02;
+}
+.orders-div-style{
+    min-height: 80vh;
 }

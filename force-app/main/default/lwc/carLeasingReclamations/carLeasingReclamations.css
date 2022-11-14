@@ -5,7 +5,8 @@ h2 {
 .div-table-style{
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    min-height: 80vh;
 }
 table{
     width: 50%;
@@ -22,9 +23,9 @@ td{
     padding: 20px 0;
 }
 .row-style{
-    cursor: pointer;
+    /* cursor: pointer; */
     border-bottom: 2px solid transparent;
 }
-.row-style:hover{
+/* .row-style:hover{
     border-bottom: 2px solid #fd6b0249;
-}
+} */
