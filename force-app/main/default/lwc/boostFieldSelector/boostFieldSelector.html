@@ -1,0 +1,22 @@
+<template>
+    <div class="input-container">
+        <label style="display: block;" class="input-label" for="legal-entity-type-input">Select sObject</label>
+        <select name="Select sObject" id="legal-entity-type-input" onchange={onSobjectChange} required>
+            <template if:true={sobjects}>
+                <template for:each={sobjects} for:item="sobject">
+                    <option value={sobject} key={sobject}>{sobject}</option>
+                </template>
+            </template>
+        </select>
+    </div>
+    <p>Query: {query}</p>
+    <div>
+        <lightning-combobox name="progress" label="Status" value={value} placeholder="Select Progress" options={fields}
+            onchange={handleChange}></lightning-combobox>
+    </div>
+    <div>
+        <template for:each={allValues} for:item="val">
+            <lightning-pill key={val} label={val} name={val} onremove={handleRemove}></lightning-pill>
+        </template>
+    </div>
+</template>
