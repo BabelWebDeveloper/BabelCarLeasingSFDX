@@ -49,7 +49,6 @@ export default class BoostQuerySelector extends LightningElement {
         if(!this.allValues.includes(event.target.value)){
             this.allValues.push(JSON.parse(JSON.stringify(event.target.value)));
         }
-        console.log('allValues: ' + this.allValues);
         this.queryObjectField = this.allValues;
     }
 
@@ -59,7 +58,6 @@ export default class BoostQuerySelector extends LightningElement {
         this.queryObjectField = this.allValues;
     }
 
-    
     _fields = [];
     _objectFields = [];
 }

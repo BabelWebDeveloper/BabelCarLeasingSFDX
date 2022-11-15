@@ -1,7 +1,7 @@
 <template>
     <template if:true={advancedMode}>
         <div class="slds-box slds-theme_default">
-            <lightning-textarea name="input1" label="Enter some text" onchange={handleSoql}></lightning-textarea>
+            <lightning-textarea name="input1" label="Enter Query" onchange={handleSoql}></lightning-textarea>
         </div>
     </template>
     <template if:false={advancedMode}>

@@ -30,7 +30,12 @@ export default class BoostQuerySelector extends LightningElement {
     }
 
     set query(value) {
-        this.queryString = value;
+        this.queryString = 'SELECT ';
+        if (value !== null || value !== '') {
+            this.queryString += value;
+            this.queryString += ' FROM ' + this.sObjectString;
+        }
+        
     }
 
     getAllCustomSObjects() {
@@ -52,18 +57,15 @@ export default class BoostQuerySelector extends LightningElement {
         this.value = '';
         let sObjectName = event.target.value;
         this.sObjectString = sObjectName;
-        console.log('this.sObjectString: ' + this.sObjectString);
     }
 
     hanldeQueryFieldsChange(event) {
         let fields = event.detail;
-        console.log(event.detail);
-        if (fields.length > 0) {
-            this.queryFields = event.detail + ' FROM ' + this.sObjectString;
+        let formattedFieldsSplit = fields.split(',');
+        if (formattedFieldsSplit[0] !== '') {
+            this.query = fields;
         } else {
-            this.queryFields = '';
+            this.queryString = 'SELECT ';
         }
-        
-        console.log('this.queryFields: ' + this.queryFields);
     }
 }
