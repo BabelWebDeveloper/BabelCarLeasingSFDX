@@ -24,9 +24,8 @@
         </div>
         <template if:true={sobjects}>
             <c-boost-field-selector 
-            name={sObjectString} 
-            query={queryString}
-            onprogressvaluechange={hanldeProgressValueChange}>
+            name={sObjectString}
+            onqueryfieldschange={hanldeQueryFieldsChange}>
         </c-boost-field-selector>
         </template>
     </template>

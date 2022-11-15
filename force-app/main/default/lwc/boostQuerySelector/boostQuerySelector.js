@@ -8,6 +8,7 @@ export default class BoostQuerySelector extends LightningElement {
     @track progressValue;
 
     queryString = 'SELECT ';
+    queryFields;
     sObjectString;
 
     connectedCallback() {
@@ -54,8 +55,15 @@ export default class BoostQuerySelector extends LightningElement {
         console.log('this.sObjectString: ' + this.sObjectString);
     }
 
-    hanldeProgressValueChange(event) {
-        this.progressValue = event.detail;
-        console.log('parent: ' + this.progressValue);
+    hanldeQueryFieldsChange(event) {
+        let fields = event.detail;
+        console.log(event.detail);
+        if (fields.length > 0) {
+            this.queryFields = event.detail + ' FROM ' + this.sObjectString;
+        } else {
+            this.queryFields = '';
+        }
+        
+        console.log('this.queryFields: ' + this.queryFields);
     }
 }
