@@ -5,7 +5,7 @@ import getAllSObjectFields from '@salesforce/apex/BoostFieldSelectorController.g
 export default class BoostQuerySelector extends LightningElement {
     @api name;
     @api query;
-    @track queryWithFields;
+    @api queryWithFields;
     @track allValues = [];
     @track enableFieldsSelector;
 
@@ -24,6 +24,10 @@ export default class BoostQuerySelector extends LightningElement {
     set queryObjectField(value) {
         this.queryWithFields = this.query;
         this.queryWithFields += value;
+        const selectedEvent = new CustomEvent("progressvaluechange", {
+            detail: this.queryWithFields
+        });
+        this.dispatchEvent(selectedEvent);
     }
 
     @wire(getAllSObjectFields, { sObjectString: '$name'})

@@ -5,6 +5,7 @@ export default class BoostQuerySelector extends LightningElement {
     @track sobjects;
     @track allValues = [];
     @track advancedMode = true;
+    @track progressValue;
 
     queryString = 'SELECT ';
     sObjectString;
@@ -51,5 +52,10 @@ export default class BoostQuerySelector extends LightningElement {
         let sObjectName = event.target.value;
         this.sObjectString = sObjectName;
         console.log('this.sObjectString: ' + this.sObjectString);
+    }
+
+    hanldeProgressValueChange(event) {
+        this.progressValue = event.detail;
+        console.log('parent: ' + this.progressValue);
     }
 }

@@ -23,7 +23,11 @@
             </div>
         </div>
         <template if:true={sobjects}>
-            <c-boost-field-selector name={sObjectString} query={queryString}></c-boost-field-selector>
+            <c-boost-field-selector 
+            name={sObjectString} 
+            query={queryString}
+            onprogressvaluechange={hanldeProgressValueChange}>
+        </c-boost-field-selector>
         </template>
     </template>
     <div class="slds-box slds-theme_default">
