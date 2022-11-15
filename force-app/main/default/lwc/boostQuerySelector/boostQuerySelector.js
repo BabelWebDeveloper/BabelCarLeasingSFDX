@@ -4,8 +4,9 @@ import getAllCustomSObjects from '@salesforce/apex/BoostFieldSelectorController.
 export default class BoostQuerySelector extends LightningElement {
     @track sobjects;
     @track allValues = [];
+    @track advancedMode = true;
 
-    queryString;
+    queryString = 'SELECT ';
     sObjectString;
 
     connectedCallback() {
@@ -13,12 +14,21 @@ export default class BoostQuerySelector extends LightningElement {
         this.getAllCustomSObjects();
     }
 
+    handleTodoChange(event) {
+        this.advancedMode = event.target.checked;
+    }
+
+    handleSoql(event){
+        console.log(event.target.value);
+        this.sObjectString = event.target.value;
+    }
+
     get query() {
         return this.queryString;
     }
 
     set query(value) {
-        this.queryString = 'SELECT ' + value;
+        this.queryString = value;
     }
 
     getAllCustomSObjects() {
@@ -39,7 +49,6 @@ export default class BoostQuerySelector extends LightningElement {
         this.allValues = [];
         this.value = '';
         let sObjectName = event.target.value;
-        this.query = sObjectName;
         this.sObjectString = sObjectName;
         console.log('this.sObjectString: ' + this.sObjectString);
     }

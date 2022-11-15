@@ -1,5 +1,13 @@
 <template>
-    <div onclick={changeValue}>Button</div>
-    Hey!! this is my name from the parent component :
-   <c-child name={myname}></c-child>
+    <lightning-card title="Getting Data From Child">
+        <p>parent value: {progressValue}</p>
+        <p class="slds-p-horizontal_small">
+          <lightning-progress-bar
+            value={progressValue}
+            size="large"></lightning-progress-bar>
+          <c-child
+            onprogressvaluechange={hanldeProgressValueChange}
+          ></c-child>
+        </p>
+      </lightning-card>
 </template>

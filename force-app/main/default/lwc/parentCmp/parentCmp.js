@@ -1,9 +1,8 @@
-import { LightningElement} from 'lwc';
+import { LightningElement, track} from 'lwc';
 
 export default class ParentCmp extends LightningElement {
-    myname = '';
-
-    changeValue(){
-        this.myname = 'SalesforceKid'
+    @track progressValue = 0;
+    hanldeProgressValueChange(event) {
+      this.progressValue = event.detail;
     }
 }

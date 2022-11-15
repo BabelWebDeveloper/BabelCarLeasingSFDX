@@ -1,13 +1,13 @@
 <template>
-    <p>{name}</p>
-
-    <div>
-        <lightning-combobox name="progress" label="Status" value={value} placeholder="Select Progress" options={fields}
-            onchange={handleChange}></lightning-combobox>
-    </div>
-    <div>
-        <template for:each={allValues} for:item="val">
-            <lightning-pill key={val} label={val} name={val} onremove={handleRemove}></lightning-pill>
-        </template>
-    </div>
+    <template if:true={enableFieldsSelector}>
+        <div class="slds-box slds-theme_default">
+            <lightning-combobox name="progress" label="Fields" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
+            <template for:each={allValues} for:item="val">
+                <div class="slds-m-vertical_medium" key={val}>
+                    <lightning-pill key={val} label={val} name={val} onremove={handleRemove}></lightning-pill>
+                </div>
+            </template>
+        </div>
+    </template>
+    <p>queryWithFields: {queryWithFields}</p>
 </template>
