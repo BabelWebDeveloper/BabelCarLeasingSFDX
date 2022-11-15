@@ -1,7 +1,12 @@
 import { LightningElement, track, api, wire } from 'lwc';
+import getAllCustomSObjects from '@salesforce/apex/BoostFieldSelectorController.getAllCustomSObjects';
 
 export default class BoostQuerySelector extends LightningElement {
-    @api sobjects;
+    @track sobjects;
+    @track allValues = [];
+
+    queryString;
+    sObjectString;
 
     connectedCallback() {
         this.isLoading = true;
@@ -36,5 +41,6 @@ export default class BoostQuerySelector extends LightningElement {
         let sObjectName = event.target.value;
         this.query = sObjectName;
         this.sObjectString = sObjectName;
+        console.log('this.sObjectString: ' + this.sObjectString);
     }
 }

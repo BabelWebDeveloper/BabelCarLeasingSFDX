@@ -2,49 +2,12 @@ import { LightningElement, track, api, wire } from 'lwc';
 import getAllCustomSObjects from '@salesforce/apex/BoostFieldSelectorController.getAllCustomSObjects';
 import getAllSObjectFields from '@salesforce/apex/BoostFieldSelectorController.getAllSObjectFields';
 
-export default class BoostFieldSelector extends LightningElement {
-    @track sobjects;
+export default class BoostQuerySelector extends LightningElement {
+    @api name;
     @track allValues = [];
-    // @api sObjectString;
 
-    queryString;
-    sObjectString;
     value;
 
-    connectedCallback() {
-        this.isLoading = true;
-        this.getAllCustomSObjects();
-    }
-
-    get query() {
-        return this.queryString;
-    }
-
-    set query(value) {
-        this.queryString = 'SELECT ' + value;
-    }
-
-    getAllCustomSObjects() {
-        getAllCustomSObjects({})
-        .then((result) => {
-            if (result) {
-                this.sobjects = result;
-                this.error = undefined;
-            }
-        }).catch((error) => {
-            this.error = error.message;
-        }).finally(() => {
-            this.isLoading = false;
-        })
-    }
-
-    onSobjectChange(event) {
-        this.allValues = [];
-        this.value = '';
-        let sObjectName = event.target.value;
-        this.query = sObjectName;
-        this.sObjectString = sObjectName;
-    }
 
     get fields(){
         return this._objectFields.map((element) => {
@@ -52,8 +15,10 @@ export default class BoostFieldSelector extends LightningElement {
         })
     }
 
-    @wire(getAllSObjectFields, { sObjectString: '$sObjectString'})
+    @wire(getAllSObjectFields, { sObjectString: '$name'})
     wiredSobjectFields(results){
+        this.allValues = [];
+        this.value = '';
         this.isLoading = true;
         if (results.data) {
             this._objectFields = results.data;
@@ -61,12 +26,11 @@ export default class BoostFieldSelector extends LightningElement {
         this.isLoading = false;
     }
 
-    // ____________________________________________________________
-
     handleChange(event) {
         if(!this.allValues.includes(event.target.value)){
-        this.allValues.push(event.target.value);
+            this.allValues.push(event.target.value);
         }
+        console.log(this.allValues);
     }
 
     handleRemove(event){
