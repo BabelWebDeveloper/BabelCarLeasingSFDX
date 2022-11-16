@@ -1,6 +1,6 @@
 <template>
     <template if:true={enableFieldsSelector}>
-        <div class="slds-box slds-theme_default">
+        <div class="slds-form-element__control slds-theme_default">
             <lightning-combobox name="progress" label="Fields" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
             <template for:each={allValues} for:item="val">
                 <div class="slds-m-vertical_medium" key={val}>

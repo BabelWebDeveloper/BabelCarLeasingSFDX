@@ -1,6 +1,5 @@
 import { LightningElement, track, api, wire } from 'lwc';
-import getAllCustomSObjects from '@salesforce/apex/BoostFieldSelectorController.getAllCustomSObjects';
-import getAllSObjectFields from '@salesforce/apex/BoostFieldSelectorController.getAllSObjectFields';
+import getObjectFields from '@salesforce/apex/BoostFieldSelectorController.getObjectFields';
 
 export default class BoostQuerySelector extends LightningElement {
     @api name;
@@ -29,7 +28,7 @@ export default class BoostQuerySelector extends LightningElement {
         this.dispatchEvent(selectedEvent);
     }
 
-    @wire(getAllSObjectFields, { sObjectString: '$name'})
+    @wire(getObjectFields, { sObjectString: '$name'})
     wiredSobjectFields(results){
         if (results) {
             this.allValues = [];

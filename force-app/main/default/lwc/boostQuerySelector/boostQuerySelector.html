@@ -1,44 +1,35 @@
 <template>
-    <template if:true={advancedMode}>
-        <div class="slds-box slds-theme_default">
-            <lightning-textarea name="input1" label="Enter Query" onchange={handleSoql}></lightning-textarea>
-        </div>
-    </template>
-    <template if:false={advancedMode}>
-        <div class="slds-box slds-theme_default">
-            <label style="display: block;" class="input-label" for="legal-entity-type-input">Select sObject</label>
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="select-01">Select Label</label>
-                <div class="slds-form-element__control">
-                    <div class="slds-select_container">
-                        <select onchange={onSobjectChange} class="slds-select" id="select-01">
-                            <template if:true={sobjects}>
-                                    <template for:each={sobjects} for:item="sobject">
-                                            <option value={sobject} key={sobject}>{sobject}</option>
-                                    </template>
-                            </template>
-                        </select>
-                    </div>
-                </div>
+    <div class="slds-form-element slds-box slds-theme_default">
+        <template if:true={advancedMode}>
+            <label class="slds-form-element__label" for="text-input-id-47">
+            <abbr class="slds-required" title="required">* </abbr>Enter Query</label>
+            <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-47" placeholder="SOQL text" required="" class="slds-input" onchange={handleSoql} />
             </div>
-        </div>
-        <template if:true={sobjects}>
-            <c-boost-field-selector 
-            name={sObjectString}
-            onqueryfieldschange={hanldeQueryFieldsChange}>
-        </c-boost-field-selector>
         </template>
-    </template>
-    <div class="slds-box slds-theme_default">
-        <lightning-input
-            type="checkbox"
-            label="Advanced mode"
-            value={advancedMode}
-            checked={advancedMode}                                                
-            onchange={handleTodoChange} >
-        </lightning-input>
+        <template if:false={advancedMode}>
+            <div class="slds-form-element__control">
+                <!-- <label style="display: block;" class="input-label" for="legal-entity-type-input">Select sObject</label> -->
+                <lightning-combobox name="progress" label="Select sObject" required="" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
+            </div>
+            <template if:true={sobjects}>
+                <c-boost-field-selector 
+                    name={sObjectString}
+                    onqueryfieldschange={hanldeQueryFieldsChange}>
+                </c-boost-field-selector>
+            </template>
+        </template>
+        <div class="slds-form-element__control">
+            <lightning-input
+                type="checkbox"
+                label="Advanced mode"
+                value={advancedMode}
+                checked={advancedMode}                                                
+                onchange={handleTodoChange} >
+            </lightning-input>
+        </div>
+        <div class="slds-form-element__control">
+            <div class="slds-text-body_regular">Query: {query}</div>
+        </div>     
     </div>
-    <div class="slds-box slds-theme_default">
-        <div class="slds-text-body_regular">Query: {query}</div>
-    </div>     
 </template>
