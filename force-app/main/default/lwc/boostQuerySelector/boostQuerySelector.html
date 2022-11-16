@@ -10,22 +10,36 @@
             </div>
         </template>
         <template if:false={advancedMode}>
-            <div class="slds-form-element slds-theme_default slds-m-vertical_small">
-                <div class="slds-form-element__control">
-                    <lightning-combobox name="progress" label="Select sObject" required="" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
+            <template if:true={enableObjectsSelecton}>
+                <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning-combobox name="progress" label="Select sObject" required="" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
+                    </div>
+                    <template if:true={sobjects}>
+                        <c-boost-field-selector 
+                            name={objectName}
+                            onqueryfieldschange={hanldeQueryFieldsChange}>
+                        </c-boost-field-selector>
+                    </template>
                 </div>
-                <template if:true={sobjects}>
-                    <c-boost-field-selector 
-                        name={objectName}
-                        onqueryfieldschange={hanldeQueryFieldsChange}>
-                    </c-boost-field-selector>
-                </template>
-            </div>
-            <div class="slds-form-element slds-theme_default slds-m-vertical_small">
-                <template if:true={objectName}>
-                    <label class="slds-form-element__label" for="text-input-id-47">FROM {objectName}</label>
-                </template>
-            </div>
+            </template>
+            <template if:false={enableObjectsSelecton}>
+                <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+                    <div class="slds-text-color_error">Sorry! Object selection is disabled.</div>
+                </div>
+            </template>
+            <template if:true={enableFieldsSelecton}>
+                <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+                    <template if:true={objectName}>
+                        <label class="slds-form-element__label" for="text-input-id-47">FROM {objectName}</label>
+                    </template>
+                </div>
+            </template>
+            <template if:false={enableFieldsSelecton}>
+                <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+                    <div class="slds-text-color_error">Sorry! Field selection is disabled.</div>
+                </div>
+            </template>
         </template>
         <div class="slds-form-element slds-theme_default">
             <div class="slds-form-element__control">
