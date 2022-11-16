@@ -22,6 +22,11 @@
                 </template>
             </template>
         </div>
+        <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+            <template if:true={objectName}>
+                <label class="slds-form-element__label" for="text-input-id-47">FROM {objectName}</label>
+            </template>
+        </div>
         <div class="slds-form-element slds-theme_default">
             <div class="slds-form-element__control">
                 <lightning-input
