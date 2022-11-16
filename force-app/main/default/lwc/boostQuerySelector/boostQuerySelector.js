@@ -7,11 +7,11 @@ export default class BoostQuerySelector extends LightningElement {
     @track allValues = [];
     @track advancedMode = true;
     @track progressValue;
-    @track enableObjectsSelecton = true;
-    @track enableFieldsSelecton = true;
-    @track enableConditionsSelecton = true;
-    @track enableOrdering = true;
-    @track enableLimit = true;
+    @track enableObjectsSelecton;
+    @track enableFieldsSelecton;
+    @track enableConditionsSelecton;
+    @track enableOrdering;
+    @track enableLimit;
 
     inputQuery;
     queryString = 'SELECT ';

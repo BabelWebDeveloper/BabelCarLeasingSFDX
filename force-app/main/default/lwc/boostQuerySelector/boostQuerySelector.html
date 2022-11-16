@@ -1,7 +1,7 @@
 <template>
     <div class="slds-theme_default">
         <template if:true={advancedMode}>
-            <div class="slds-form-element slds-theme_default">
+            <div class="slds-form-element slds-theme_default slds-m-vertical_small">
                 <label class="slds-form-element__label" for="text-input-id-47">
                 <abbr class="slds-required" title="required">* </abbr>Enter Query</label>
                 <div class="slds-form-element__control">
@@ -16,10 +16,17 @@
                         <lightning-combobox name="progress" label="Select sObject" required="" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
                     </div>
                     <template if:true={sobjects}>
-                        <c-boost-field-selector 
-                            name={objectName}
-                            onqueryfieldschange={hanldeQueryFieldsChange}>
-                        </c-boost-field-selector>
+                        <template if:true={enableFieldsSelecton}>
+                            <c-boost-field-selector 
+                                name={objectName}
+                                onqueryfieldschange={hanldeQueryFieldsChange}>
+                            </c-boost-field-selector>
+                        </template>
+                        <template if:false={enableFieldsSelecton}>
+                            <div class="slds-form-element__control slds-theme_default slds-m-vertical_small">
+                                <div class="slds-text-color_error">Sorry! Field selection is disabled.</div>
+                            </div>
+                        </template>
                     </template>
                 </div>
             </template>
@@ -35,13 +42,8 @@
                     </template>
                 </div>
             </template>
-            <template if:false={enableFieldsSelecton}>
-                <div class="slds-form-element slds-theme_default slds-m-vertical_small">
-                    <div class="slds-text-color_error">Sorry! Field selection is disabled.</div>
-                </div>
-            </template>
         </template>
-        <div class="slds-form-element slds-theme_default">
+        <div class="slds-form-element slds-theme_default slds-m-vertical_small">
             <div class="slds-form-element__control">
                 <lightning-input
                     type="checkbox"
