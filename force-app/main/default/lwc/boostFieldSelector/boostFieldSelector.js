@@ -5,7 +5,7 @@ export default class BoostQuerySelector extends LightningElement {
     @api name;
     @api queryWithFields;
     @track allValues = [];
-    @track enableFieldsSelector;
+    @track enableFieldsSelecton;
 
     value;
 
@@ -37,7 +37,7 @@ export default class BoostQuerySelector extends LightningElement {
             this._objectFields = [];
             this.isLoading = true;
             if (results.data) {
-                this.enableFieldsSelector = true;
+                this.enableFieldsSelecton = true;
                 this._objectFields = results.data;
             }
         }

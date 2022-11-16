@@ -1,11 +1,17 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getObjects from '@salesforce/apex/BoostFieldSelectorController.getObjects';
+import setPermissions from '@salesforce/apex/BoostFieldSelectorController.setQueryPermissions';
 
 export default class BoostQuerySelector extends LightningElement {
     @track sobjects;
     @track allValues = [];
     @track advancedMode = true;
     @track progressValue;
+    @track enableObjectsSelecton;
+    @track enableFieldsSelecton;
+    @track enableConditionsSelecton;
+    @track enableOrdering;
+    @track enableLimit;
 
     inputQuery;
     queryString = 'SELECT ';
@@ -13,7 +19,21 @@ export default class BoostQuerySelector extends LightningElement {
     objectName;
 
     connectedCallback() {
-        this.isLoading = true;
+        let wrapper = {
+            enableObjectsSelecton: true,
+            enableFieldsSelecton: true,
+            enableConditionsSelecton: true,
+            enableOrdering: true,
+            enableLimit: true
+        }
+        setPermissions({wrapper : wrapper})
+        .then(result => {
+            this.enableObjectsSelecton = result.enableObjectsSelecton;
+            this.enableFieldsSelecton = result.enableFieldsSelecton;
+            this.enableConditionsSelecton = result.enableConditionsSelecton;
+            this.enableOrdering = result.enableOrdering;
+            this.enableLimit = result.enableLimit;
+        })
         this.getObjects();
     }
 

@@ -1,4 +1,15 @@
 public without sharing class BoostFieldSelectorController {
+    @AuraEnabled(cacheable=true)
+    public static Map<String, Boolean> setQueryPermissions(BoostFieldSelectorWrapper wrapper){
+        Map<String, Boolean> permissionMap = new Map<String,Boolean>();
+        permissionMap.put('enableObjectsSelecton', wrapper.enableObjectsSelecton);
+        permissionMap.put('enableFieldsSelecton', wrapper.enableFieldsSelecton);
+        permissionMap.put('enableConditionsSelecton', wrapper.enableConditionsSelecton);
+        permissionMap.put('enableOrdering', wrapper.enableOrdering);
+        permissionMap.put('enableLimit', wrapper.enableLimit);
+
+        return permissionMap;
+    }
 
     @AuraEnabled(cacheable=true)
     public static List<String> getObjects() {

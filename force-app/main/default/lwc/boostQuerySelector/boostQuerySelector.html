@@ -1,32 +1,46 @@
 <template>
     <div class="slds-theme_default">
-        <div class="slds-form-element slds-theme_default">
-            <template if:true={advancedMode}>
+        <template if:true={advancedMode}>
+            <div class="slds-form-element slds-theme_default slds-m-bottom_small">
                 <label class="slds-form-element__label" for="text-input-id-47">
                 <abbr class="slds-required" title="required">* </abbr>Enter Query</label>
                 <div class="slds-form-element__control">
                     <input type="text" id="text-input-id-47" placeholder="SOQL text" required="" class="slds-input" onchange={handleSoql} />
                 </div>
-            </template>
-        </div>
-        <div class="slds-form-element slds-theme_default slds-m-vertical_small">
-            <template if:false={advancedMode}>
-                <div class="slds-form-element__control">
-                    <lightning-combobox name="progress" label="Select sObject" required="" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
+            </div>
+        </template>
+        <template if:false={advancedMode}>
+            <template if:true={enableObjectsSelecton}>
+                <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning-combobox name="progress" label="Select sObject" required="" value={value} placeholder="Select Progress" options={fields} onchange={handleChange}></lightning-combobox>
+                    </div>
+                    <template if:true={enableFieldsSelecton}>
+                        <template if:true={sobjects}>
+                            <c-boost-field-selector 
+                                name={objectName}
+                                onqueryfieldschange={hanldeQueryFieldsChange}>
+                            </c-boost-field-selector>
+                        </template>
+                    </template>
+                    <template if:false={enableFieldsSelecton}>
+                        <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+                            <div class="slds-text-color_error">Sorry! Fields selection is disabled.</div>
+                        </div>
+                    </template>
                 </div>
-                <template if:true={sobjects}>
-                    <c-boost-field-selector 
-                        name={objectName}
-                        onqueryfieldschange={hanldeQueryFieldsChange}>
-                    </c-boost-field-selector>
+                <template if:true={enableFieldsSelecton}>
+                    <template if:true={objectName}>
+                        <div class="slds-form-element slds-theme_default slds-m-vertical_small">
+                            <label class="slds-form-element__label" for="text-input-id-47">FROM {objectName}</label>
+                        </div>
+                    </template>
                 </template>
             </template>
-        </div>
-        <div class="slds-form-element slds-theme_default slds-m-vertical_small">
-            <template if:true={objectName}>
-                <label class="slds-form-element__label" for="text-input-id-47">FROM {objectName}</label>
+            <template if:false={enableObjectsSelecton}>
+                <div class="slds-text-color_error">Sorry! Object selection is disabled.</div>
             </template>
-        </div>
+        </template>
         <div class="slds-form-element slds-theme_default">
             <div class="slds-form-element__control">
                 <lightning-input
