@@ -10,7 +10,7 @@ export default class BoostQuerySelector extends LightningElement {
     inputQuery;
     queryString = 'SELECT ';
     queryFields;
-    sObjectString;
+    objectName;
 
     connectedCallback() {
         this.isLoading = true;
@@ -64,7 +64,7 @@ export default class BoostQuerySelector extends LightningElement {
         this.queryString = 'SELECT ';
         if (value !== null || value !== '') {
             this.queryString += value;
-            this.queryString += ' FROM ' + this.sObjectString;
+            this.queryString += ' FROM ' + this.objectName;
         }
         
     }
@@ -88,7 +88,7 @@ export default class BoostQuerySelector extends LightningElement {
         this.allValues = [];
         this.value = '';
         let sObjectName = event.target.value;
-        this.sObjectString = sObjectName;
+        this.objectName = sObjectName;
     }
 
     hanldeQueryFieldsChange(event) {
@@ -99,13 +99,14 @@ export default class BoostQuerySelector extends LightningElement {
         } else {
             this.queryString = 'SELECT ';
         }
+        console.log(this.query);
     }
 
     value;
 
     handleChange(event) {
         let objectName = event.target.value;
-        this.sObjectString = objectName;
+        this.objectName = objectName;
         console.log(objectName);
     }
 

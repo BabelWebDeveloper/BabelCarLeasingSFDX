@@ -9,8 +9,8 @@ public without sharing class BoostFieldSelectorController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<String> getObjectFields(String sObjectString){
-        SObjectType accountType = Schema.getGlobalDescribe().get(sObjectString);
+    public static List<String> getObjectFields(String objectName){
+        SObjectType accountType = Schema.getGlobalDescribe().get(objectName);
         Map<String,Schema.SObjectField> mfields = accountType.getDescribe().fields.getMap();
         Map<String, String> fields = new Map<String, String>();
 

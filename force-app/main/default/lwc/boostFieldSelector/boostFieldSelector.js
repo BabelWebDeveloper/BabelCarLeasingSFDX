@@ -28,7 +28,7 @@ export default class BoostQuerySelector extends LightningElement {
         this.dispatchEvent(selectedEvent);
     }
 
-    @wire(getObjectFields, { sObjectString: '$name'})
+    @wire(getObjectFields, { objectName: '$name'})
     wiredSobjectFields(results){
         if (results) {
             this.allValues = [];
